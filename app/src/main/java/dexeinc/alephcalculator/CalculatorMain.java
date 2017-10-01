@@ -19,16 +19,11 @@ public class CalculatorMain extends AppCompatActivity {
     int parenthesisCount = 0;
     TextView display;
     TextView result;
-    private DrawerLayout menu;
-    private ActionBarDrawerToggle menuButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calculator_main);
-
-        menu = (DrawerLayout) findViewById(R.id.mainlayout);
-        menuButton = new ActionBarDrawerToggle(this, menu, R.string.open, R.string.closed);
 
         Button one = (Button) findViewById(R.id.button1);
         Button two = (Button) findViewById(R.id.button2);
@@ -55,10 +50,6 @@ public class CalculatorMain extends AppCompatActivity {
         result = (TextView) findViewById(R.id.oper);
 
         display.setText(digits);
-
-        menu.addDrawerListener(menuButton);
-        menuButton.syncState();
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         one.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -205,14 +196,6 @@ public class CalculatorMain extends AppCompatActivity {
                 add();
             }
         });
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (menuButton.onOptionsItemSelected(item)) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
 //    @Override
