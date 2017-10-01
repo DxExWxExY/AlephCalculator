@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/store"
+        android:checkable="false"
+        android:enabled="true"
+        android:title="Other Apps" />
+    <item android:id="@+id/about"
+        android:title="About"/>
+    <item android:id="@+id/contact"
+        android:title="Contact Information" />
+
+</menu>
