@@ -242,6 +242,13 @@ public class Calculator extends AppCompatActivity
                 Intent store = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/search?q=DxExWxExY&c=apps&hl=en"));
                 startActivity(store);
                 return true;
+            case R.id.nav_contact:
+                Intent email = new Intent(Intent.ACTION_SEND);
+                email.setType("message/rfc822");
+                email.putExtra(android.content.Intent.EXTRA_EMAIL, new String[] {"DxExWxExY@gmail.com"});
+                email.putExtra(Intent.EXTRA_SUBJECT, "Aleph Calculator");
+                startActivity(email);
+                return true;
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
