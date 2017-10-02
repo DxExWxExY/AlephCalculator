@@ -1,6 +1,7 @@
 package dexeinc.alephcalculator;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -233,11 +234,14 @@ public class Calculator extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         switch (item.getItemId()) {
-            case R.id.nav_calc:
-                Intent calc = new Intent(Calculator.this, Calculator.class);
-                startActivity(calc);
+            case R.id.nav_about:
+                Intent about = new Intent(Calculator.this, About.class);
+                startActivity(about);
                 return true;
-
+            case R.id.nav_other:
+                Intent store = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/search?q=DxExWxExY&c=apps&hl=en"));
+                startActivity(store);
+                return true;
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
