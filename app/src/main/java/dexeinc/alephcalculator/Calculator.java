@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.view.SoundEffectConstants;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -279,11 +280,20 @@ public class Calculator extends AppCompatActivity
 
     void add() {
         if (!result.getText().equals("")) {
-            digits = result.getText() + "+";
-            result.setText("");
-            display.setText(digits);
-            dotReset = true;
-            result.setText("");
+            if (result.getText().charAt(0) == '-') {
+                digits = "(" + result.getText() + ")" + "+";
+                result.setText("");
+                display.setText(digits);
+                dotReset = true;
+                result.setText("");
+            }
+            else {
+                digits = result.getText() + "+";
+                result.setText("");
+                display.setText(digits);
+                dotReset = true;
+                result.setText("");
+            }
         }
         else if (Character.isDigit(digits.charAt(digits.length()-1)) || digits.charAt(digits.length()-1) == ')') {
             digits += "+";
@@ -303,14 +313,24 @@ public class Calculator extends AppCompatActivity
 
     void subs() {
         if (!result.getText().equals("")) {
-            digits = result.getText() + "-";
-            result.setText("");
-            display.setText(digits);
-            dotReset = true;
-            result.setText("");
+            if (result.getText().charAt(0) == '-') {
+                digits = "(" + result.getText() + ")" + "-";
+                result.setText("");
+                display.setText(digits);
+                dotReset = true;
+                result.setText("");
+            }
+            else {
+                digits = result.getText() + "-";
+                result.setText("");
+                display.setText(digits);
+                dotReset = true;
+                result.setText("");
+            }
         }
         else if (digits.equals("0")) {
-            digits = "-";
+            digits = "(-";
+            parenthesisCount++;
             display.setText(digits);
         }
         else if (Character.isDigit(digits.charAt(digits.length()-1)) ||
@@ -332,19 +352,32 @@ public class Calculator extends AppCompatActivity
     }
 
     void mult() {
+        /*Checks if result display is populated, then takes the result and adds * at the end*/
         if (!result.getText().equals("")) {
-            digits = result.getText() + "*";
-            result.setText("");
-            display.setText(digits);
-            dotReset = true;
-            result.setText("");
+            if (result.getText().charAt(0) == '-') {
+                digits = "(" + result.getText() + ")" + "*";
+                result.setText("");
+                display.setText(digits);
+                dotReset = true;
+                result.setText("");
+            }
+            else {
+                digits = result.getText() + "*";
+                result.setText("");
+                display.setText(digits);
+                dotReset = true;
+                result.setText("");
+            }
         }
-        else if (Character.isDigit(digits.charAt(digits.length()-1)) || digits.charAt(digits.length()-1) == ')') {
+        /*Checks if digits last index is a number and that digits in not equals to 0
+        * or if the last character is a closing parenthesis*/
+        else if ((Character.isDigit(digits.charAt(digits.length()-1)) && !digits.equals("0")) || digits.charAt(digits.length()-1) == ')') {
             digits += "*";
             display.setText(digits);
             dotReset = true;
             result.setText("");
         }
+        /*Checks if the last index isn't a number*/
         else if (!Character.isDigit(digits.charAt(digits.length()-1)) &&
                 digits.charAt(digits.length()-1) != ')' &&
                 digits.charAt(digits.length()-1) != '(') {
@@ -357,11 +390,20 @@ public class Calculator extends AppCompatActivity
 
     void div() {
         if (!result.getText().equals("")) {
-            digits = result.getText() + "/";
-            result.setText("");
-            display.setText(digits);
-            dotReset = true;
-            result.setText("");
+            if (result.getText().charAt(0) == '-') {
+                digits = "(" + result.getText() + ")" + "/";
+                result.setText("");
+                display.setText(digits);
+                dotReset = true;
+                result.setText("");
+            }
+            else {
+                digits = result.getText() + "/";
+                result.setText("");
+                display.setText(digits);
+                dotReset = true;
+                result.setText("");
+            }
         }
         else if (Character.isDigit(digits.charAt(digits.length()-1)) || digits.charAt(digits.length()-1) == ')') {
             digits += "/";
@@ -432,32 +474,45 @@ public class Calculator extends AppCompatActivity
     }
 
     void parenthesis() {
+        /*Checks if digits is equal to 0 and replaces it with an opening parenthesis*/
         if (digits.equals("0")) {
             digits = "(";
             display.setText(digits);
             parenthesisCount++;
         }
+        /*Checks if the last character isn't a digit and parenthesis count equals 0*/
         else if (parenthesisCount == 0  && !Character.isDigit(digits.charAt(digits.length()-1))) {
-            digits += "(";
-            display.setText(digits);
-            parenthesisCount++;
+            if (digits.charAt(digits.length()-1) == ')') {
+                digits += "*(";
+                display.setText(digits);
+                parenthesisCount++;
+            }
+            else {
+                digits += "(";
+                display.setText(digits);
+                parenthesisCount++;
+            }
         }
+        /*Checks if the last character is a digit and parenthesis count doesn't equal 0*/
         else if (parenthesisCount != 0 && Character.isDigit(digits.charAt(digits.length()-1))) {
             digits += ")";
             display.setText(digits);
             parenthesisCount--;
         }
+        /*Checks if the las char is a num or parenthesis then adds a *( to the operation*/
         else if (parenthesisCount == 0 &&
                 (Character.isDigit(digits.charAt(digits.length()-1)) || digits.charAt(digits.length()-1) == ')')) {
             digits += "*(";
             display.setText(digits);
             parenthesisCount++;
         }
+        /*Checks if the last char is ) and if the parenthesis count  != equal 0*/
         else if (parenthesisCount != 0 && digits.charAt(digits.length()-1) == ')') {
             digits += ")";
             display.setText(digits);
             parenthesisCount--;
         }
+        /*Checks if the last char is an operand and adds an ( */
         else if (parenthesisCount != 0 && !Character.isDigit(digits.charAt(digits.length()-1))) {
             digits += "(";
             display.setText(digits);
@@ -470,7 +525,8 @@ public class Calculator extends AppCompatActivity
     }
 
     /*Calculator Logic*/
-    public void stringProcessor(String operation) {
+    public void stringProcessor(String digits) {
+        String operation = digits;
         operation = "(" + operation + ")";
         while (hasParenthesis(operation)) {
             int openParenthesisIndex = 0;
@@ -495,7 +551,8 @@ public class Calculator extends AppCompatActivity
         result.setText(operation);
     }
 
-    public String operationCalculator(String operation) {
+    public String operationCalculator(String digits) {
+        String operation = digits;
         try {
             if (!Character.toString(operation.charAt(operation.length()-1)).matches("[0-9()]")) {
                 digits = operation.substring(0, digits.length()-1);
@@ -646,23 +703,20 @@ public class Calculator extends AppCompatActivity
             if (isNegative) {
                 if (Double.parseDouble(operation)%1 == 0) {
                     isNegative = false;
-                    digits = String.valueOf((int) -Double.parseDouble(operation));
+                    operation = String.valueOf((int) - Double.parseDouble(operation));
                 }
                 else {
                     isNegative = false;
-                    digits = "-" + operation;
+                    operation = "-" + operation;
                 }
             }
             else {
                 if (Double.parseDouble(operation)%1 == 0) {
-                    digits = String.valueOf((int) Double.parseDouble(operation));
-                }
-                else {
-                    digits = operation;
+                    operation = String.valueOf((int) Double.parseDouble(operation));
                 }
             }
         }
-        return digits;
+        return operation;
     }
 
     public boolean hasParenthesis(String operation) {
