@@ -258,11 +258,19 @@ public class Calculator extends AppCompatActivity
     }
     /*Buttons Logic*/
     void numberPressed(int num) {
+        /*if the operation display has a 0*/
         if (digits.equals("0")) {
             digits = String.valueOf(num);
             display.setText(digits);
             result.setText("");
         }
+        /*clears operation after number is pressed*/
+        else if (!result.equals("") && (digits.length() != 0)) {
+            digits = String.valueOf(num);
+            display.setText(digits);
+            result.setText("");
+        }
+        /*if there is a number in the operation display*/
         else {
             digits += String.valueOf(num);
             display.setText(digits);
