@@ -24,6 +24,7 @@ public class Calculator extends AppCompatActivity
 
     String digits = "0";
     Boolean dotReset = true;
+    Boolean calculationReset = false;
     int parenthesisCount = 0;
     TextView display;
     TextView result;
@@ -183,6 +184,7 @@ public class Calculator extends AppCompatActivity
             public void onClick(View v) {
                 try {
                     stringProcessor(digits);
+                    calculationReset = true;
                 }
                 catch (NumberFormatException a) {
                     String e1 = "App Cannot Process Operation Yet";
@@ -265,10 +267,11 @@ public class Calculator extends AppCompatActivity
             result.setText("");
         }
         /*clears operation after number is pressed*/
-        else if (!result.equals("") && (digits.length() != 0)) {
+        else if (calculationReset) {
             digits = String.valueOf(num);
             display.setText(digits);
             result.setText("");
+            calculationReset = false;
         }
         /*if there is a number in the operation display*/
         else {
@@ -284,31 +287,39 @@ public class Calculator extends AppCompatActivity
         result.setText("");
         dotReset = true;
         parenthesisCount = 0;
+        calculationReset = false;
     }
 
     void add() {
+        /*if the result is not empty, concatenate symbol*/
         if (!result.getText().equals("")) {
+            /*if the result is negative*/
             if (result.getText().charAt(0) == '-') {
                 digits = "(" + result.getText() + ")" + "+";
                 result.setText("");
                 display.setText(digits);
                 dotReset = true;
                 result.setText("");
+                calculationReset = false;
             }
+            /*positive number present when adding*/
             else {
                 digits = result.getText() + "+";
                 result.setText("");
                 display.setText(digits);
                 dotReset = true;
                 result.setText("");
+                calculationReset = false;
             }
         }
+        /*if there is a number or closing parenthesis, concatenate symbol*/
         else if (Character.isDigit(digits.charAt(digits.length()-1)) || digits.charAt(digits.length()-1) == ')') {
             digits += "+";
             display.setText(digits);
             dotReset = true;
             result.setText("");
         }
+
         else if (!Character.isDigit(digits.charAt(digits.length()-1)) &&
                 digits.charAt(digits.length()-1) != ')' &&
                 digits.charAt(digits.length()-1) != '(') {
@@ -327,6 +338,7 @@ public class Calculator extends AppCompatActivity
                 display.setText(digits);
                 dotReset = true;
                 result.setText("");
+                calculationReset = false;
             }
             else {
                 digits = result.getText() + "-";
@@ -334,6 +346,7 @@ public class Calculator extends AppCompatActivity
                 display.setText(digits);
                 dotReset = true;
                 result.setText("");
+                calculationReset = false;
             }
         }
         else if (digits.equals("0")) {
@@ -368,6 +381,7 @@ public class Calculator extends AppCompatActivity
                 display.setText(digits);
                 dotReset = true;
                 result.setText("");
+                calculationReset = false;
             }
             else {
                 digits = result.getText() + "*";
@@ -375,6 +389,7 @@ public class Calculator extends AppCompatActivity
                 display.setText(digits);
                 dotReset = true;
                 result.setText("");
+                calculationReset = false;
             }
         }
         /*Checks if digits last index is a number and that digits in not equals to 0
@@ -404,6 +419,7 @@ public class Calculator extends AppCompatActivity
                 display.setText(digits);
                 dotReset = true;
                 result.setText("");
+                calculationReset = false;
             }
             else {
                 digits = result.getText() + "/";
@@ -411,6 +427,7 @@ public class Calculator extends AppCompatActivity
                 display.setText(digits);
                 dotReset = true;
                 result.setText("");
+                calculationReset = false;
             }
         }
         else if (Character.isDigit(digits.charAt(digits.length()-1)) || digits.charAt(digits.length()-1) == ')') {
@@ -448,32 +465,40 @@ public class Calculator extends AppCompatActivity
     }
 
     void del() {
+        calculationReset = false;
+        /*only 1 character left in the string*/
         if (digits.length() == 1) {
             digits = "0";
             display.setText(digits);
             result.setText("");
         }
+        /*if operation string not empty*/
         else if (!digits.equals("")) {
+            /*if last is a dot*/
             if (digits.charAt(digits.length()-1) == '.') {
                 digits = digits.substring(0, digits.length() - 1);
                 display.setText(digits);
                 dotReset = true;
             }
+            /*if last is a multiplication parenthesis*/
             else if (digits.charAt(digits.length()-1) == '(' && digits.charAt(digits.length()-2) == '*') {
                 digits = digits.substring(0, digits.length() - 2);
                 display.setText(digits);
                 parenthesisCount--;
             }
+            /*if last is an opening parenthesis*/
             else if (digits.charAt(digits.length()-1) == '(') {
                 digits = digits.substring(0, digits.length() - 1);
                 display.setText(digits);
                 parenthesisCount--;
             }
+            /*if last is an opening parenthesis*/
             else if (digits.charAt(digits.length()-1) == ')') {
                 digits = digits.substring(0, digits.length() - 1);
                 display.setText(digits);
                 parenthesisCount++;
             }
+            /*if last is "[0-9*+-/]"*/
             else {
                 digits = digits.substring(0, digits.length() - 1);
                 display.setText(digits);
@@ -533,7 +558,9 @@ public class Calculator extends AppCompatActivity
     }
 
     /*Calculator Logic*/
-    public void stringProcessor(String digits) {
+
+
+    /*public void stringProcessor(String digits) {
         String operation = digits;
         operation = "(" + operation + ")";
         while (hasParenthesis(operation)) {
@@ -747,15 +774,10 @@ public class Calculator extends AppCompatActivity
 
     public boolean hasAddOrSub(String operation) {
         for (int i = 0; i < operation.length(); i++) {
-            // if (i > 0 && operation.charAt(i) == '-') {
-            // 	if (Character.toString(operation.charAt(i-1)).matches("[\\/\\*\\-\\+]")) {
-            // 	 	return false;
-            // 	}
-            // }
             if (operation.charAt(i) == '+' || operation.charAt(i) == '-') {
                 return true;
             }
         }
         return false;
-    }
+    }*/
 }
