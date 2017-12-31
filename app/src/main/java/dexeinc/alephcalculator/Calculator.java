@@ -720,6 +720,9 @@ public class Calculator extends AppCompatActivity
         if (evaluator.peek()%1 == 0) {
             result = String.valueOf(evaluator.peek().intValue());
         }
+        else {
+            result = String.valueOf(evaluator.peek());
+        }
         return result;
     }
 
