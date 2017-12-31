@@ -18,11 +18,13 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+import java.util.*;
 
 public class Calculator extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     String digits = "0";
+    String resultTemp = "";
     Boolean dotReset = true;
     Boolean calculationReset = false;
     int parenthesisCount = 0;
@@ -59,7 +61,7 @@ public class Calculator extends AppCompatActivity
         Button nine = (Button) findViewById(R.id.button9);
         Button zero = (Button) findViewById(R.id.button0);
         Button clear = (Button) findViewById(R.id.buttonC);
-        Button equals = (Button) findViewById(R.id.buttonEquals);
+        final Button equals = (Button) findViewById(R.id.buttonEquals);
         Button dot = (Button) findViewById(R.id.buttonDot);
         Button del = (Button) findViewById(R.id.buttonDel);
         Button parenthesis = (Button) findViewById(R.id.buttonParenthesis);
@@ -182,14 +184,7 @@ public class Calculator extends AppCompatActivity
         equals.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try {
-                    stringProcessor(digits);
-                    calculationReset = true;
-                }
-                catch (NumberFormatException a) {
-                    String e1 = "App Cannot Process Operation Yet";
-                    Toast.makeText(getApplicationContext(), e1, Toast.LENGTH_LONG).show();
-                }
+                ans();
             }
         });
 
@@ -258,6 +253,7 @@ public class Calculator extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
     /*Buttons Logic*/
     void numberPressed(int num) {
         /*if the operation display has a 0*/
@@ -554,230 +550,186 @@ public class Calculator extends AppCompatActivity
     }
 
     void percentage() {
-        //calls result and divides result by 100
+        resultTemp = postFixProcessor(digits);
+        double percent = Double.parseDouble(resultTemp) / 100;
+        result.setText(String.valueOf(percent));
+    }
+
+    void ans() {
+        try {
+            result.setText(postFixProcessor("(" + digits + ")"));
+            calculationReset = true;
+
+        }
+        catch (EmptyStackException a) {
+            String e1 = "Can't Process Negative Number";
+            Toast.makeText(getApplicationContext(), e1, Toast.LENGTH_LONG).show();
+        }
     }
 
     /*Calculator Logic*/
-
-
-    /*public void stringProcessor(String digits) {
-        String operation = digits;
-        operation = "(" + operation + ")";
-        while (hasParenthesis(operation)) {
-            int openParenthesisIndex = 0;
-            int closedParenthesisIndex = operation.length() - 1;
-            String subOperation = "";
-            String replacedOperation = "";
-            String calculation = "";
-            for (int i = 0; i < operation.length(); i++) {
-                if (operation.charAt(i) == '(') {
-                    openParenthesisIndex = i;
-                }
-                if (operation.charAt(i) == ')') {
-                    closedParenthesisIndex = i;
-                    break;
-                }
+    /*This will determine the size of the postFix array created in postFixProcessor method*/
+    int postFixArraySize(String operation) {
+        int size = 0;
+        for (int i = 0; i < operation.length(); i++) {
+            if (Character.toString(operation.charAt(i)).matches("[+-/*]")) {
+                size++;
             }
-            subOperation = operation.substring(openParenthesisIndex, closedParenthesisIndex + 1);
-            calculation = operationCalculator(subOperation);
-            replacedOperation = operation.replace(subOperation, calculation);
-            operation = replacedOperation;
         }
-        result.setText(operation);
+        return (size * 3) + 1;
     }
 
-    public String operationCalculator(String digits) {
-        String operation = digits;
-        try {
-            if (!Character.toString(operation.charAt(operation.length()-1)).matches("[0-9()]")) {
-                digits = operation.substring(0, digits.length()-1);
-                display.setText(digits);
-            }
-            if (Double.parseDouble(operation) % 1 == 0) {
-                result.setText(String.valueOf(operation));
-            }
-            else {
-                result.setText(String.valueOf(operation));
-            }
-        }
-        catch (NumberFormatException a) {
-            //NEW ALGORITHM'S PLACE
-            boolean isNegative = false;
-            if (operation.charAt(0) == '(' && operation.charAt(operation.length()-1) == ')') {
-                operation = operation.substring(1, operation.length()-1);
-            }
-            if (operation.charAt(0) == '-') {
-                operation = operation.substring(1, operation.length());
-                isNegative = true;
-            }
-            //mult or div finder
-            while(hasMultOrDiv(operation)) {
-                boolean muliplication = false;
-                boolean division = false;
-                String subOperation = "";
-                Double result = 0.0;
-                int operationIndex = 0;
-                int startIndex = 0;
-                int endIndex = operation.length()-1;
-                for (int i = 0; i < operation.length(); i++) {
-                    if (operation.charAt(i) == '*') {
-                        muliplication = true;
-                        operationIndex = i;
-                        break;
+    /*The method will recives the operation and convert it to postfix*/
+    String postFixProcessor(String operation) {
+        Stack<String> symbols = new Stack<>(); //stack for symbols
+        String buffer = ""; //buffer for multi digit numbers
+        String[] postFix = new String[postFixArraySize(operation)]; //bufer for postfix operation
+        int pfPointer = 0;
+        String reverse = "";
+        /*check for any negative numbers*/
+        operation = operation.replace("(-", "(0-");
+		/*This for loop will iterate through the string and determine what to do depending
+		/*if charAt(i) is an operation symbol or a digit of a multi-dgit expresion*/
+        for (int i = 0; i < operation.length(); i++) {
+            switch (operation.charAt(i)) {
+                case '(':
+                    symbols.push("(");
+                    break;
+                case ')':
+                    if ((buffer != null) && !buffer.equals("")) {
+                        postFix[pfPointer] = buffer;
+                        buffer = "";
+                        pfPointer++;
                     }
-                    if (operation.charAt(i) == '/') {
-                        division = true;
-                        operationIndex = i;
-                        break;
+                    while (!symbols.peek().equals("(")) {
+                        if (symbols.peek().matches("[+-/*]")) {
+                            reverse += symbols.pop();
+                        }
                     }
-                }
-                startIndex = operationIndex;
-                endIndex = operationIndex;
-                while (startIndex-1 >= 0) {
-                    if (Character.toString(operation.charAt(startIndex-1)).matches("[0-9.-]")) {
-                        startIndex--;
+                    if (symbols.peek().equals("(")) {
+                        symbols.pop();
+                        for (int j = reverse.length()-1; j >= 0; j--) {
+                            postFix[pfPointer] = Character.toString(reverse.charAt(j));
+                            pfPointer++;
+                        }
                     }
-                    else if (!Character.toString(operation.charAt(startIndex-1)).matches("[0-9.-]")) {
-                        break;
+                    reverse = "";
+                    break;
+                case '*':
+                    if ((buffer != null) && !buffer.equals("")) {
+                        postFix[pfPointer] = buffer;
+                        buffer = "";
+                        pfPointer++;
                     }
-                }
-                while (endIndex+1 < operation.length()) {
-                    if (Character.toString(operation.charAt(endIndex+1)).matches("[0-9.-]")) {
-                        endIndex++;
-                    }
-                    else if (!Character.toString(operation.charAt(endIndex+1)).matches("[0-9.-]")) {
-                        break;
-                    }
-                }
-                subOperation = operation.substring(startIndex, endIndex+1);
-                if (muliplication) {
-                    String[] calculation = subOperation.split("\\*");
-                    result = Double.parseDouble(calculation[0]) * Double.parseDouble(calculation[1]);
-                    operation = operation.replace(subOperation, String.valueOf(result));
-                }
-                if (division) {
-                    String[] calculation = subOperation.split("\\/");
-                    result = Double.parseDouble(calculation[0]) / Double.parseDouble(calculation[1]);
-                    operation = operation.replace(subOperation, String.valueOf(result));
-                }
-            }
-            //add and sub finder
-            while(hasAddOrSub(operation)) {
-                boolean addition = false;
-                boolean substraction = false;
-                String subOperation = "";
-                Double result = 0.0;
-                int operationIndex = 0;
-                int startIndex = 0;
-                int endIndex = operation.length()-1;
-                for (int i = 0; i < operation.length(); i++) {
-                    if (operation.charAt(i) == '+') {
-                        addition = true;
-                        operationIndex = i;
-                        break;
-                    }
-                    if (operation.charAt(i) == '-') {
-                        substraction = true;
-                        operationIndex = i;
-                        break;
-                    }
-                }
-                startIndex = operationIndex;
-                endIndex = operationIndex;
-                while (startIndex-1 >= 0) {
-                    if (Character.toString(operation.charAt(startIndex-1)).matches("[0-9.]")) {
-                        startIndex--;
-                    }
-                    else if (!Character.toString(operation.charAt(startIndex-1)).matches("[0-9.]")) {
-                        break;
-                    }
-                }
-                while (endIndex+1 < operation.length()) {
-                    if (Character.toString(operation.charAt(endIndex+1)).matches("[0-9.]")) {
-                        endIndex++;
-                    }
-                    else if (!Character.toString(operation.charAt(endIndex+1)).matches("[0-9.]")) {
-                        break;
-                    }
-                }
-                subOperation = operation.substring(startIndex, endIndex+1);
-                if (isNegative) {
-                    subOperation = "0" + subOperation;
-                    isNegative = false;
-                }
-                if (addition) {
-                    System.out.print("\nADD LOOP " + subOperation);
-                    String[] calculation = subOperation.split("\\+");
-                    if (isNegative) {
-                        result = -Double.parseDouble(calculation[0]) + Double.parseDouble(calculation[1]);
-                        operation = operation.replace(subOperation, String.valueOf(result));
-                        isNegative = false;
+                    if (symbols.peek().matches("[/*]")) {
+                        postFix[pfPointer] = symbols.pop();
+                        pfPointer++;
+                        symbols.push("*");
                     }
                     else {
-                        result = Double.parseDouble(calculation[0]) + Double.parseDouble(calculation[1]);
-                        operation = operation.replace(subOperation, String.valueOf(result));
+                        symbols.push("*");
                     }
-                }
-                if (substraction) {
-                    System.out.print("\nSUB LOOP");
-                    String[] calculation = subOperation.split("\\-");
-                    if (isNegative) {
-                        result = -Double.parseDouble(calculation[0]) - Double.parseDouble(calculation[1]);
-                        operation = operation.replace(subOperation, String.valueOf(result));
-                        isNegative = false;
+                    break;
+                case '/':
+                    if ((buffer != null) && !buffer.equals("")) {
+                        postFix[pfPointer] = buffer;
+                        buffer = "";
+                        pfPointer++;
+                    }
+                    if (symbols.peek().matches("[/*]")) {
+                        postFix[pfPointer] = symbols.pop();
+                        pfPointer++;
+                        symbols.push("/");
                     }
                     else {
-                        result = Double.parseDouble(calculation[0]) - Double.parseDouble(calculation[1]);
-                        operation = operation.replace(subOperation, String.valueOf(result));
+                        symbols.push("/");
                     }
-                }
-                if (result < 0) {
                     break;
+                case '+':
+                    if ((buffer != null) && !buffer.equals("")) {
+                        postFix[pfPointer] = buffer;
+                        buffer = "";
+                        pfPointer++;
+                    }
+                    if (symbols.peek().matches("[+-/*]")) {
+                        postFix[pfPointer] = symbols.pop();
+                        pfPointer++;
+                        symbols.push("+");
+                    }
+                    else {
+                        symbols.push("+");
+                    }
+                    break;
+                case '-':
+                    if ((buffer != null) && !buffer.equals("")) {
+                        postFix[pfPointer] = buffer;
+                        buffer = "";
+                        pfPointer++;
+                    }
+                    if (symbols.peek().matches("[+-/*]")) {
+                        postFix[pfPointer] = symbols.pop();
+                        pfPointer++;
+                        symbols.push("-");
+                    }
+                    else {
+                        symbols.push("-");
+                    }
+                    break;
+                default:
+                    buffer += Character.toString(operation.charAt(i));
+                    break;
+            }
+        }
+        postFix = nullRm(postFix);
+        return postFixEvaluator(postFix);
+    }
+
+    /*This method will process the the postFix array wnd give back the result*/
+    String postFixEvaluator(String[] postFix) {
+        Stack<Double> evaluator = new Stack<Double>();
+        String result = "";
+        for (int i = 0; i < postFix.length; i++) {
+			/*If the element at i is a number*/
+            if (!postFix[i].matches("[+-/*]") && !postFix[i].equals("")) {
+                evaluator.push(Double.parseDouble(postFix[i]));
+            }
+			/*If the element at i is an operand*/
+            else if (postFix[i].matches("[+-/*]")) {
+                double b = evaluator.pop();
+                double a = evaluator.pop();
+                switch (postFix[i]) {
+                    case "*":
+                        evaluator.push(a*b);
+                        break;
+                    case "/":
+                        evaluator.push(a/b);
+                        break;
+                    case "+":
+                        evaluator.push(a+b);
+                        break;
+                    case "-":
+                        evaluator.push(a-b);
+                        break;
                 }
             }
-            if (isNegative) {
-                if (Double.parseDouble(operation)%1 == 0) {
-                    isNegative = false;
-                    operation = String.valueOf((int) - Double.parseDouble(operation));
-                }
-                else {
-                    isNegative = false;
-                    operation = "-" + operation;
-                }
-            }
+			/*if the end of the array is reached*/
             else {
-                if (Double.parseDouble(operation)%1 == 0) {
-                    operation = String.valueOf((int) Double.parseDouble(operation));
-                }
+                break;
             }
         }
-        return operation;
+        if (evaluator.peek()%1 == 0) {
+            result = String.valueOf(evaluator.peek().intValue());
+        }
+        return result;
     }
 
-    public boolean hasParenthesis(String operation) {
-        for (int i = 0; i < operation.length(); i++) {
-            if (operation.charAt(i) == '(') {
-                return true;
+    /*This will delete any nulls in the array if any*/
+    String[] nullRm(String[] postFix) {
+        for (int x = 0; x < postFix.length; x++) {
+            if (postFix[x] == null) {
+                postFix[x] = "";
             }
         }
-        return false;
+        return postFix;
     }
-
-    public boolean hasMultOrDiv(String operation) {
-        for (int i = 0; i < operation.length(); i++) {
-            if (operation.charAt(i) == '*' || operation.charAt(i) == '/') {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public boolean hasAddOrSub(String operation) {
-        for (int i = 0; i < operation.length(); i++) {
-            if (operation.charAt(i) == '+' || operation.charAt(i) == '-') {
-                return true;
-            }
-        }
-        return false;
-    }*/
 }
