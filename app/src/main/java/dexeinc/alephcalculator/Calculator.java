@@ -309,7 +309,7 @@ public class Calculator extends AppCompatActivity
             }
         }
         /*if there is a number or closing parenthesis, concatenate symbol*/
-        else if (Character.isDigit(digits.charAt(digits.length()-1)) || digits.charAt(digits.length()-1) == ')') {
+        else if ((Character.isDigit(digits.charAt(digits.length()-1)) && !digits.equals("0"))|| digits.charAt(digits.length()-1) == ')') {
             digits += "+";
             display.setText(digits);
             dotReset = true;
@@ -426,7 +426,7 @@ public class Calculator extends AppCompatActivity
                 calculationReset = false;
             }
         }
-        else if (Character.isDigit(digits.charAt(digits.length()-1)) || digits.charAt(digits.length()-1) == ')') {
+        else if ((Character.isDigit(digits.charAt(digits.length()-1)) && !digits.equals("0")) || digits.charAt(digits.length()-1) == ')') {
             digits += "/";
             display.setText(digits);
             dotReset = true;
@@ -550,19 +550,23 @@ public class Calculator extends AppCompatActivity
     }
 
     void percentage() {
-        resultTemp = postFixProcessor(digits);
+        resultTemp = postFixProcessor("(" + digits + ")");
         double percent = Double.parseDouble(resultTemp) / 100;
         result.setText(String.valueOf(percent));
     }
 
     void ans() {
         try {
+            if (Character.toString(digits.charAt(digits.length()-1)).matches("[-+*/]")) {
+                digits = digits.substring(0, digits.length()-1);
+                display.setText(digits);
+            }
             result.setText(postFixProcessor("(" + digits + ")"));
             calculationReset = true;
 
         }
         catch (EmptyStackException a) {
-            String e1 = "Can't Process Negative Number";
+            String e1 = "Incomplete Operation";
             Toast.makeText(getApplicationContext(), e1, Toast.LENGTH_LONG).show();
         }
     }
@@ -579,7 +583,7 @@ public class Calculator extends AppCompatActivity
         return (size * 3) + 1;
     }
 
-    /*The method will recives the operation and convert it to postfix*/
+    /*The method will receives the operation and convert it to postfix*/
     String postFixProcessor(String operation) {
         Stack<String> symbols = new Stack<>(); //stack for symbols
         String buffer = ""; //buffer for multi digit numbers
