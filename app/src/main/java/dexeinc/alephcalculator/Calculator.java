@@ -24,11 +24,6 @@ import java.util.*;
 public class Calculator extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    /*String digits = "0";
-    String resultDisplayTemp = "";
-    Boolean dotReset = true;
-    Boolean calculationReset = false;
-    int parenthesisCount = 0;*/
     Operation userOperation = new Operation();
     TextView operationDisplay;
     TextView resultDisplay;
@@ -78,22 +73,16 @@ public class Calculator extends AppCompatActivity
 
         operationDisplay.setText(userOperation.operation);
 
-        one.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                userOperation.numberPressed(1);
-                operationDisplay.setText(userOperation.operation);
-                resultDisplay.setText(userOperation.result);
-            }
+        one.setOnClickListener(v -> {
+            userOperation.numberPressed(1);
+            operationDisplay.setText(userOperation.operation);
+            resultDisplay.setText(userOperation.result);
         });
 
-        two.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                userOperation.numberPressed(2);
-                operationDisplay.setText(userOperation.operation);
-                resultDisplay.setText(userOperation.result);
-            }
+        two.setOnClickListener(v -> {
+            userOperation.numberPressed(2);
+            operationDisplay.setText(userOperation.operation);
+            resultDisplay.setText(userOperation.result);
         });
 
         three.setOnClickListener(new View.OnClickListener() {
@@ -204,13 +193,10 @@ public class Calculator extends AppCompatActivity
             }
         });
 
-        parenthesis.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                userOperation.insertParenthesis();
-                operationDisplay.setText(userOperation.operation);
-                resultDisplay.setText(userOperation.result);
-            }
+        parenthesis.setOnClickListener(e -> {
+            userOperation.insertParenthesis();
+            operationDisplay.setText(userOperation.operation);
+            resultDisplay.setText(userOperation.result);
         });
 
         equals.setOnClickListener(new View.OnClickListener() {
