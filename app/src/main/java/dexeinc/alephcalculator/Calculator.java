@@ -20,29 +20,47 @@ import java.util.EmptyStackException;
 public class Calculator extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    Operation userOperation = new Operation();
+    /**
+     * Variables to be used by button events.
+     */
+    Operation expression;
     TextView operationDisplay;
     TextView resultDisplay;
 
-
+    /**
+     * Method to be called on launch.
+     * {@inheritDoc}
+     * @param savedInstanceState System provided variable.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        expression = new Operation();
+        initNavBar();
+        initDisplay();
+        initButtons();
+    }
+
+    /**
+     * Initializes navigation bar code.
+     */
+    public void initNavBar() {
         setContentView(R.layout.activity_calculator);
-        /*Nav Bar Code*/
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+    }
 
-        /*Buttons Code*/
+    /**
+     * Initializes buttons and listeners.
+     */
+    public void initButtons() {
         Button one = (Button) findViewById(R.id.button1);
         Button two = (Button) findViewById(R.id.button2);
         Button three = (Button) findViewById(R.id.button3);
@@ -64,122 +82,145 @@ public class Calculator extends AppCompatActivity
         Button add = (Button) findViewById(R.id.add);
         Button mult = (Button) findViewById(R.id.multiply);
 
-        operationDisplay = (TextView) findViewById(R.id.operationDisplay);
-        resultDisplay = (TextView) findViewById(R.id.resultDisplay);
-
-        operationDisplay.setText(userOperation.operation);
-
         one.setOnClickListener(v -> {
-            userOperation.numberPressed(1);
-            operationDisplay.setText(userOperation.operation);
-            resultDisplay.setText(userOperation.result);
+            expression.numberPressed(1);
+            operationDisplay.setText(expression.operation);
+            resultDisplay.setText(expression.result);
         });
 
         two.setOnClickListener(v -> {
-            userOperation.numberPressed(2);
-            operationDisplay.setText(userOperation.operation);
-            resultDisplay.setText(userOperation.result);
+            expression.numberPressed(2);
+            operationDisplay.setText(expression.operation);
+            resultDisplay.setText(expression.result);
         });
 
         three.setOnClickListener(v -> {
-            userOperation.numberPressed(3);
-            operationDisplay.setText(userOperation.operation);
-            resultDisplay.setText(userOperation.result);
+            expression.numberPressed(3);
+            operationDisplay.setText(expression.operation);
+            resultDisplay.setText(expression.result);
         });
 
         four.setOnClickListener(v -> {
-            userOperation.numberPressed(4);
-            operationDisplay.setText(userOperation.operation);
-            resultDisplay.setText(userOperation.result);
+            expression.numberPressed(4);
+            operationDisplay.setText(expression.operation);
+            resultDisplay.setText(expression.result);
         });
 
         five.setOnClickListener(v -> {
-            userOperation.numberPressed(5);
-            operationDisplay.setText(userOperation.operation);
-            resultDisplay.setText(userOperation.result);
+            expression.numberPressed(5);
+            operationDisplay.setText(expression.operation);
+            resultDisplay.setText(expression.result);
         });
 
         six.setOnClickListener(v -> {
-            userOperation.numberPressed(6);
-            operationDisplay.setText(userOperation.operation);
-            resultDisplay.setText(userOperation.result);
+            expression.numberPressed(6);
+            operationDisplay.setText(expression.operation);
+            resultDisplay.setText(expression.result);
         });
 
         seven.setOnClickListener(v -> {
-            userOperation.numberPressed(7);
-            operationDisplay.setText(userOperation.operation);
-            resultDisplay.setText(userOperation.result);
+            expression.numberPressed(7);
+            operationDisplay.setText(expression.operation);
+            resultDisplay.setText(expression.result);
         });
 
         eight.setOnClickListener(v -> {
-            userOperation.numberPressed(8);
-            operationDisplay.setText(userOperation.operation);
-            resultDisplay.setText(userOperation.result);
+            expression.numberPressed(8);
+            operationDisplay.setText(expression.operation);
+            resultDisplay.setText(expression.result);
         });
 
         nine.setOnClickListener(v -> {
-            userOperation.numberPressed(9);
-            operationDisplay.setText(userOperation.operation);
-            resultDisplay.setText(userOperation.result);
+            expression.numberPressed(9);
+            operationDisplay.setText(expression.operation);
+            resultDisplay.setText(expression.result);
         });
 
         zero.setOnClickListener(v -> {
-            userOperation.numberPressed(0);
-            operationDisplay.setText(userOperation.operation);
-            resultDisplay.setText(userOperation.result);
+            expression.numberPressed(0);
+            operationDisplay.setText(expression.operation);
+            resultDisplay.setText(expression.result);
         });
 
         dot.setOnClickListener(v -> {
-            userOperation.insertDot();
-            operationDisplay.setText(userOperation.operation);
-            resultDisplay.setText(userOperation.result);
+            expression.insertDot();
+            operationDisplay.setText(expression.operation);
+            resultDisplay.setText(expression.result);
         });
 
         del.setOnClickListener(v -> {
-            userOperation.deleteLast();
-            operationDisplay.setText(userOperation.operation);
-            resultDisplay.setText(userOperation.result);
+            expression.deleteLast();
+            operationDisplay.setText(expression.operation);
+            resultDisplay.setText(expression.result);
         });
 
         clear.setOnClickListener(v -> {
-            userOperation.deleteOperation();
-            operationDisplay.setText(userOperation.operation);
-            resultDisplay.setText(userOperation.result);
+            expression.deleteOperation();
+            operationDisplay.setText(expression.operation);
+            resultDisplay.setText(expression.result);
         });
 
         percent.setOnClickListener(v -> {
-            userOperation.getPercentage();
-            operationDisplay.setText(userOperation.operation);
-            resultDisplay.setText(userOperation.result);
+            expression.getPercentage();
+            operationDisplay.setText(expression.operation);
+            resultDisplay.setText(expression.result);
         });
 
         parenthesis.setOnClickListener(v -> {
-            userOperation.insertParenthesis();
-            operationDisplay.setText(userOperation.operation);
-            resultDisplay.setText(userOperation.result);
+            expression.insertParenthesis();
+            operationDisplay.setText(expression.operation);
+            resultDisplay.setText(expression.result);
         });
 
         equals.setOnClickListener(v -> {
             try {
-                userOperation.getAnswer();
-                operationDisplay.setText(userOperation.operation);
-                resultDisplay.setText(userOperation.result);
-            }
-            catch (EmptyStackException a) {
+                expression.getAnswer();
+                operationDisplay.setText(expression.operation);
+                resultDisplay.setText(expression.result);
+            } catch (EmptyStackException a) {
                 String e1 = "Incomplete Operation";
                 Toast.makeText(getApplicationContext(), e1, Toast.LENGTH_LONG).show();
             }
         });
 
-        divide.setOnClickListener(v -> userOperation.insertDivision());
+        divide.setOnClickListener(v -> {
+            expression.insertDivision();
+            operationDisplay.setText(expression.operation);
+            resultDisplay.setText(expression.result);
+        });
 
-        mult.setOnClickListener(v -> userOperation.insertMultiplication());
+        mult.setOnClickListener(v -> {
+            expression.insertMultiplication();
+            operationDisplay.setText(expression.operation);
+            resultDisplay.setText(expression.result);
+        });
 
-        sub.setOnClickListener(v -> userOperation.insertSubtraction());
+        sub.setOnClickListener(v -> {
+            expression.insertSubtraction();
+            operationDisplay.setText(expression.operation);
+            resultDisplay.setText(expression.result);
+        });
 
-        add.setOnClickListener(v -> userOperation.insertAddition());
+        add.setOnClickListener(v -> {
+            expression.insertAddition();
+            operationDisplay.setText(expression.operation);
+            resultDisplay.setText(expression.result);
+        });
     }
-    /*Nav Bar Code*/
+
+    /**
+     * Initializes text viewers.
+     */
+    public void initDisplay() {
+        operationDisplay = (TextView) findViewById(R.id.operationDisplay);
+        resultDisplay = (TextView) findViewById(R.id.resultDisplay);
+        operationDisplay.setText(expression.operation);
+    }
+
+    /**
+     * Overridden method to return to home activity.
+     * {@inheritDoc}
+     */
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -190,7 +231,11 @@ public class Calculator extends AppCompatActivity
         }
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
+    /**
+     * {@inheritDoc}
+     * @param item System provided variable.
+     * @return System used.
+     */
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         // Handle navigation view item clicks here.
@@ -206,12 +251,11 @@ public class Calculator extends AppCompatActivity
             case R.id.nav_contact:
                 Intent email = new Intent(Intent.ACTION_SEND);
                 email.setType("message/rfc822");
-                email.putExtra(android.content.Intent.EXTRA_EMAIL, new String[] {"DxExWxExY@gmail.com"});
+                email.putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{"DxExWxExY@gmail.com"});
                 email.putExtra(Intent.EXTRA_SUBJECT, "Aleph Calculator");
                 startActivity(email);
                 return true;
         }
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;

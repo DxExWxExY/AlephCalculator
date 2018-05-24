@@ -1,7 +1,8 @@
 package dexeinc.alephcalculator;
 
 /**
- * Operation class is responsible
+ * Operation Class is responsible for building an operation in
+ * infix form.
  */
 public class Operation {
     /**

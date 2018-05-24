@@ -3,9 +3,17 @@ package dexeinc.alephcalculator;
 import java.util.LinkedList;
 import java.util.Stack;
 
+/**
+ * The PostFix Class contains static methods that can be used to convert an operation
+ * from infix to postfix.
+ */
 public class PostFix {
 
-    /**The method will receives the operation and convert it to postfix*/
+    /**
+     * This method converts an operation from infix to postfix.
+     * @param operation The operation to be converted as a string.
+     * @return The postfix form of the operation.
+     */
     public static String toPostfix(String operation) {
         Stack<String> symbols = new Stack<>(); //stack for symbols
         LinkedList<String> postFix = new LinkedList<>(); //buffer for postfix operation
@@ -103,7 +111,11 @@ public class PostFix {
         return postFixEvaluator(postFix);
     }
 
-    /**This method will process the the postFix array wnd give back the resultDisplay*/
+    /**
+     * This method evaluates a postfix expression.
+     * @param postFix LinkedList containing postfix operation.
+     * @return Evaluated expression.
+     */
     private static String postFixEvaluator(LinkedList<String> postFix) {
         Stack<Double> evaluator = new Stack<>();
         String resultDisplay;
@@ -144,5 +156,4 @@ public class PostFix {
         }
         return resultDisplay;
     }
-
 }
