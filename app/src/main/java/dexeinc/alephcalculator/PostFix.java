@@ -9,8 +9,8 @@ public class PostFix {
     public static String toPostfix(String operation) {
         Stack<String> symbols = new Stack<>(); //stack for symbols
         LinkedList<String> postFix = new LinkedList<>(); //buffer for postfix operation
-        String buffer = ""; //buffer for multi digit numbers
-        String reverse = "";
+        StringBuilder buffer = new StringBuilder(); //buffer for multi digit numbers
+        StringBuilder reverse = new StringBuilder();
         operation = "("+ operation +")";
         /*check for any negative numbers*/
         operation = operation.replace("(-", "(0-");
@@ -22,13 +22,13 @@ public class PostFix {
                     symbols.push("(");
                     break;
                 case ')':
-                    if (!buffer.equals("")) {
-                        postFix.add(buffer);
-                        buffer = "";
+                    if (!buffer.toString().equals("")) {
+                        postFix.add(buffer.toString());
+                        buffer = new StringBuilder();
                     }
                     while (!symbols.peek().equals("(")) {
                         if (symbols.peek().matches("[+-/*]")) {
-                            reverse += symbols.pop();
+                            reverse.append(symbols.pop());
                         }
                     }
                     if (symbols.peek().equals("(")) {
@@ -37,12 +37,12 @@ public class PostFix {
                             postFix.add(Character.toString(reverse.charAt(j)));
                         }
                     }
-                    reverse = "";
+                    reverse = new StringBuilder();
                     break;
                 case '*':
-                    if (!buffer.equals("")) {
-                        postFix.add(buffer);
-                        buffer = "";
+                    if (!buffer.toString().equals("")) {
+                        postFix.add(buffer.toString());
+                        buffer = new StringBuilder();
                     }
                     if (symbols.peek().matches("[/*]")) {
                         postFix.add(symbols.pop());
@@ -54,9 +54,9 @@ public class PostFix {
                     }
                     break;
                 case '/':
-                    if (!buffer.equals("")) {
-                        postFix.add( buffer);
-                        buffer = "";
+                    if (!buffer.toString().equals("")) {
+                        postFix.add(buffer.toString());
+                        buffer = new StringBuilder();
                         
                     }
                     if (symbols.peek().matches("[/*]")) {
@@ -69,9 +69,9 @@ public class PostFix {
                     }
                     break;
                 case '+':
-                    if (!buffer.equals("")) {
-                        postFix.add( buffer);
-                        buffer = "";
+                    if (!buffer.toString().equals("")) {
+                        postFix.add(buffer.toString());
+                        buffer = new StringBuilder();
                         
                     }
                     if (symbols.peek().matches("[+-/*]")) {
@@ -83,9 +83,9 @@ public class PostFix {
                     }
                     break;
                 case '-':
-                    if (!buffer.equals("")) {
-                        postFix.add( buffer);
-                        buffer = "";
+                    if (!buffer.toString().equals("")) {
+                        postFix.add(buffer.toString());
+                        buffer = new StringBuilder();
                     }
                     if (symbols.peek().matches("[+-/*]")) {
                         postFix.add( symbols.pop());
@@ -96,7 +96,7 @@ public class PostFix {
                     }
                     break;
                 default:
-                    buffer += Character.toString(operation.charAt(i));
+                    buffer.append(Character.toString(operation.charAt(i)));
                     break;
             }
         }
@@ -105,8 +105,8 @@ public class PostFix {
 
     /**This method will process the the postFix array wnd give back the resultDisplay*/
     private static String postFixEvaluator(LinkedList<String> postFix) {
-        Stack<Double> evaluator = new Stack<Double>();
-        String resultDisplay = "";
+        Stack<Double> evaluator = new Stack<>();
+        String resultDisplay;
         for (String aPostFix : postFix) {
             /*If the element at i is a number*/
             if (!aPostFix.matches("[+-/*]") && !aPostFix.equals("")) {

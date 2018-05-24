@@ -4,22 +4,18 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.view.SoundEffectConstants;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-import java.util.*;
+
+import java.util.EmptyStackException;
 
 public class Calculator extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -85,162 +81,103 @@ public class Calculator extends AppCompatActivity
             resultDisplay.setText(userOperation.result);
         });
 
-        three.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                userOperation.numberPressed(3);
-                operationDisplay.setText(userOperation.operation);
-                resultDisplay.setText(userOperation.result);
-            }
+        three.setOnClickListener(v -> {
+            userOperation.numberPressed(3);
+            operationDisplay.setText(userOperation.operation);
+            resultDisplay.setText(userOperation.result);
         });
 
-        four.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                userOperation.numberPressed(4);
-                operationDisplay.setText(userOperation.operation);
-                resultDisplay.setText(userOperation.result);
-            }
+        four.setOnClickListener(v -> {
+            userOperation.numberPressed(4);
+            operationDisplay.setText(userOperation.operation);
+            resultDisplay.setText(userOperation.result);
         });
 
-        five.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                userOperation.numberPressed(5);
-                operationDisplay.setText(userOperation.operation);
-                resultDisplay.setText(userOperation.result);
-            }
+        five.setOnClickListener(v -> {
+            userOperation.numberPressed(5);
+            operationDisplay.setText(userOperation.operation);
+            resultDisplay.setText(userOperation.result);
         });
 
-        six.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                userOperation.numberPressed(6);
-                operationDisplay.setText(userOperation.operation);
-                resultDisplay.setText(userOperation.result);
-            }
+        six.setOnClickListener(v -> {
+            userOperation.numberPressed(6);
+            operationDisplay.setText(userOperation.operation);
+            resultDisplay.setText(userOperation.result);
         });
 
-        seven.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                userOperation.numberPressed(7);
-                operationDisplay.setText(userOperation.operation);
-                resultDisplay.setText(userOperation.result);
-            }
+        seven.setOnClickListener(v -> {
+            userOperation.numberPressed(7);
+            operationDisplay.setText(userOperation.operation);
+            resultDisplay.setText(userOperation.result);
         });
 
-        eight.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                userOperation.numberPressed(8);
-                operationDisplay.setText(userOperation.operation);
-                resultDisplay.setText(userOperation.result);
-            }
+        eight.setOnClickListener(v -> {
+            userOperation.numberPressed(8);
+            operationDisplay.setText(userOperation.operation);
+            resultDisplay.setText(userOperation.result);
         });
 
-        nine.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                userOperation.numberPressed(9);
-                operationDisplay.setText(userOperation.operation);
-                resultDisplay.setText(userOperation.result);
-            }
+        nine.setOnClickListener(v -> {
+            userOperation.numberPressed(9);
+            operationDisplay.setText(userOperation.operation);
+            resultDisplay.setText(userOperation.result);
         });
 
-        zero.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                userOperation.numberPressed(0);
-                operationDisplay.setText(userOperation.operation);
-                resultDisplay.setText(userOperation.result);
-            }
+        zero.setOnClickListener(v -> {
+            userOperation.numberPressed(0);
+            operationDisplay.setText(userOperation.operation);
+            resultDisplay.setText(userOperation.result);
         });
 
-        dot.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                userOperation.insertDot();
-                operationDisplay.setText(userOperation.operation);
-                resultDisplay.setText(userOperation.result);
-            }
+        dot.setOnClickListener(v -> {
+            userOperation.insertDot();
+            operationDisplay.setText(userOperation.operation);
+            resultDisplay.setText(userOperation.result);
         });
 
-        del.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                userOperation.deleteLast();
-                operationDisplay.setText(userOperation.operation);
-                resultDisplay.setText(userOperation.result);
-            }
+        del.setOnClickListener(v -> {
+            userOperation.deleteLast();
+            operationDisplay.setText(userOperation.operation);
+            resultDisplay.setText(userOperation.result);
         });
 
-        clear.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                userOperation.deleteOperation();
-                operationDisplay.setText(userOperation.operation);
-                resultDisplay.setText(userOperation.result);
-            }
+        clear.setOnClickListener(v -> {
+            userOperation.deleteOperation();
+            operationDisplay.setText(userOperation.operation);
+            resultDisplay.setText(userOperation.result);
         });
 
-        percent.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                userOperation.getPercentage();
-                operationDisplay.setText(userOperation.operation);
-                resultDisplay.setText(userOperation.result);
-            }
+        percent.setOnClickListener(v -> {
+            userOperation.getPercentage();
+            operationDisplay.setText(userOperation.operation);
+            resultDisplay.setText(userOperation.result);
         });
 
-        parenthesis.setOnClickListener(e -> {
+        parenthesis.setOnClickListener(v -> {
             userOperation.insertParenthesis();
             operationDisplay.setText(userOperation.operation);
             resultDisplay.setText(userOperation.result);
         });
 
-        equals.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try {
-                    userOperation.getAnswer();
-                    operationDisplay.setText(userOperation.operation);
-                    resultDisplay.setText(userOperation.result);
-                }
-                catch (EmptyStackException a) {
-                    String e1 = "Incomplete Operation";
-                    Toast.makeText(getApplicationContext(), e1, Toast.LENGTH_LONG).show();
-                }
+        equals.setOnClickListener(v -> {
+            try {
+                userOperation.getAnswer();
+                operationDisplay.setText(userOperation.operation);
+                resultDisplay.setText(userOperation.result);
+            }
+            catch (EmptyStackException a) {
+                String e1 = "Incomplete Operation";
+                Toast.makeText(getApplicationContext(), e1, Toast.LENGTH_LONG).show();
             }
         });
 
-        divide.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                userOperation.insertDivision();
-            }
-        });
+        divide.setOnClickListener(v -> userOperation.insertDivision());
 
-        mult.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                userOperation.insertMultiplication();
-            }
-        });
+        mult.setOnClickListener(v -> userOperation.insertMultiplication());
 
-        sub.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                userOperation.insertSubtraction();
-            }
-        });
+        sub.setOnClickListener(v -> userOperation.insertSubtraction());
 
-        add.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                userOperation.insertAddition();
-            }
-        });
+        add.setOnClickListener(v -> userOperation.insertAddition());
     }
     /*Nav Bar Code*/
     @Override

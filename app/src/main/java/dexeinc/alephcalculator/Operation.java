@@ -1,11 +1,8 @@
 package dexeinc.alephcalculator;
 
-import java.util.Stack;
-
 /**
- * Created by DxExWxExY on 3/8/2018.
+ * Operation class is responsible
  */
-
 public class Operation {
     /**
      * The following variables are required to perform any operation.
@@ -270,7 +267,7 @@ public class Operation {
     }
 
     void getPercentage() {
-        double percent = Double.parseDouble(postFixProcessor()) / 100;
+        double percent = Double.parseDouble(PostFix.toPostfix(operation)) / 100;
         result = String.valueOf(percent);
     }
 
