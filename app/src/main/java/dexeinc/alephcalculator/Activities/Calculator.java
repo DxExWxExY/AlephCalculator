@@ -15,7 +15,9 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.FileReader;
 import java.util.EmptyStackException;
+import java.util.LinkedList;
 
 import dexeinc.alephcalculator.Evaluation.Operation;
 import dexeinc.alephcalculator.R;
@@ -26,9 +28,14 @@ public class Calculator extends AppCompatActivity
     /**
      * Variables to be used by button events.
      */
-    Operation expression;
-    TextView operationDisplay;
-    TextView resultDisplay;
+    private Operation expression;
+    private TextView operationDisplay;
+    private TextView resultDisplay;
+
+    /**
+     * Linked list used for the history implementation.
+     */
+    private static LinkedList<Operation> history = new LinkedList<>();
 
     /**
      * Method to be called on launch.
@@ -42,6 +49,13 @@ public class Calculator extends AppCompatActivity
         initNavBar();
         initDisplay();
         initButtons();
+    }
+
+    /**
+     * Reads operations in file to populate history list.
+     */
+    private void readHistory() {
+        //FileReader file = new FileReader();
     }
 
     /**

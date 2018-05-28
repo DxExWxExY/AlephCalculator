@@ -150,9 +150,9 @@ public class PostFix {
                 }
             }
         }
-        if (evaluator.peek().remainder(BigDecimal.ONE).equals(BigDecimal.ZERO)) {
+        if (evaluator.peek().remainder(BigDecimal.ONE).compareTo(BigDecimal.ZERO) == 0) {
             result = String.valueOf(evaluator.peek());
-            result = result.substring(result.length()-2, result.length()-1);
+            result = result.substring(0, result.length()-3);
         }
         else {
             result = String.valueOf(evaluator.peek());
