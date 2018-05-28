@@ -275,7 +275,6 @@ public class Operation {
     public void getAnswer() {
         if (Character.toString(operation.charAt(operation.length() - 1)).matches("[-+*/]")) {
             operation = operation.substring(0, operation.length() - 1);
-
         }
         result = PostFix.toPostfix(operation);
     }

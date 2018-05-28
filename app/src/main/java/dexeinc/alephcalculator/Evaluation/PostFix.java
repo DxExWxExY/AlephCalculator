@@ -1,5 +1,7 @@
 package dexeinc.alephcalculator.Evaluation;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.LinkedList;
 import java.util.Stack;
 
@@ -117,43 +119,44 @@ public class PostFix {
      * @return Evaluated expression.
      */
     private static String postFixEvaluator(LinkedList<String> postFix) {
-        Stack<Double> evaluator = new Stack<>();
-        String resultDisplay;
+        Stack<BigDecimal> evaluator = new Stack<>();
+        String result;
         for (String aPostFix : postFix) {
             /*If the element at i is a number*/
             if (!aPostFix.matches("[+-/*]") && !aPostFix.equals("")) {
-                evaluator.push(Double.parseDouble(aPostFix));
+                evaluator.push(BigDecimal.valueOf(Double.parseDouble(aPostFix)));
             }
             /*If the element at i is an operand*/
             else if (aPostFix.matches("[+-/*]")) {
-                double b = evaluator.pop();
-                double a = evaluator.pop();
+                BigDecimal b = evaluator.pop();
+                BigDecimal a = evaluator.pop();
                 switch (aPostFix) {
                     case "*":
-                        evaluator.push(a * b);
+                        evaluator.push(a.multiply(b));
                         break;
                     case "/":
-                        evaluator.push(a / b);
+                        try {
+                            evaluator.push(a.divide(b,BigDecimal.ROUND_UNNECESSARY));
+                        } catch (ArithmeticException e) {
+                            evaluator.push(a.divide(b, 6, BigDecimal.ROUND_CEILING));
+                        }
                         break;
                     case "+":
-                        evaluator.push(a + b);
+                        evaluator.push(a.add(b));
                         break;
                     case "-":
-                        evaluator.push(a - b);
+                        evaluator.push(a.subtract(b));
                         break;
                 }
             }
-            /*if the end of the array is reached*/
-            else {
-                break;
-            }
         }
-        if (evaluator.peek()%1 == 0) {
-            resultDisplay = String.valueOf(evaluator.peek().intValue());
+        if (evaluator.peek().remainder(BigDecimal.ONE).equals(BigDecimal.ZERO)) {
+            result = String.valueOf(evaluator.peek());
+            result = result.substring(result.length()-2, result.length()-1);
         }
         else {
-            resultDisplay = String.valueOf(evaluator.peek());
+            result = String.valueOf(evaluator.peek());
         }
-        return resultDisplay;
+        return result;
     }
 }
