@@ -1,4 +1,4 @@
-package dexeinc.alephcalculator;
+package dexeinc.alephcalculator.Evaluation;
 
 /**
  * Operation Class is responsible for building an operation in
@@ -13,7 +13,7 @@ public class Operation {
     private Boolean dotReset = true;
     private int parenthesisCount = 0;
 
-    void numberPressed(int num) {
+    public void numberPressed(int num) {
         /*if the operation operationDisplay has a 0*/
         if (operation.equals("0")) {
             operation = String.valueOf(num);
@@ -26,14 +26,14 @@ public class Operation {
         }
     }
 
-    void deleteOperation() {
+    public void deleteOperation() {
         operation = "0";
         result = "";
         dotReset = true;
         parenthesisCount = 0;
     }
 
-    void insertAddition() {
+    public void insertAddition() {
         /*if the resultDisplay is not empty, concatenate symbol*/
         if (!result.equals("")) {
             /*if the resultDisplay is negative*/
@@ -67,7 +67,7 @@ public class Operation {
         }
     }
 
-    void insertSubtraction() {
+    public void insertSubtraction() {
         if (!result.equals("")) {
             if (result.charAt(0) == '-') {
                 operation = "(" + result + ")" + "-";
@@ -102,7 +102,7 @@ public class Operation {
         }
     }
 
-    void insertMultiplication() {
+    public void insertMultiplication() {
         /*Checks if resultDisplay operationDisplay is populated, then takes the resultDisplay and adds * at the end*/
         if (!result.equals("")) {
             if (result.charAt(0) == '-') {
@@ -135,7 +135,7 @@ public class Operation {
         }
     }
 
-    void insertDivision() {
+    public void insertDivision() {
         if (!result.equals("")) {
             if (result.charAt(0) == '-') {
                 operation = "(" + result + ")" + "/";
@@ -164,7 +164,7 @@ public class Operation {
         }
     }
 
-    void insertDot() {
+    public void insertDot() {
         if (operation.length() == 1 && operation.charAt(0) == '0' && dotReset) {
             operation = "0.";
             dotReset = false;
@@ -179,7 +179,7 @@ public class Operation {
         }
     }
 
-    void deleteLast() {
+    public void deleteLast() {
         /*only 1 character left in the string*/
         if (operation.length() == 1) {
             operation = "0";
@@ -220,7 +220,7 @@ public class Operation {
         }
     }
 
-    void insertParenthesis() {
+    public void insertParenthesis() {
         /*Checks if operation is equal to 0 and replaces it with an opening parenthesis*/
         if (operation.equals("0")) {
             operation = "(";
@@ -267,12 +267,12 @@ public class Operation {
         }
     }
 
-    void getPercentage() {
+    public void getPercentage() {
         double percent = Double.parseDouble(PostFix.toPostfix(operation)) / 100;
         result = String.valueOf(percent);
     }
 
-    void getAnswer() {
+    public void getAnswer() {
         if (Character.toString(operation.charAt(operation.length() - 1)).matches("[-+*/]")) {
             operation = operation.substring(0, operation.length() - 1);
 

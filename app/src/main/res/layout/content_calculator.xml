@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="dexeinc.alephcalculator.Calculator"
+    tools:context="dexeinc.alephcalculator.Activities.Calculator"
     tools:showIn="@layout/app_bar_calculator">
 
     <RelativeLayout
@@ -31,46 +31,33 @@
                 android:orientation="vertical"
                 android:padding="5dp">
 
-                <LinearLayout
+                <TextView
+                    android:id="@+id/operationDisplay"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="1.00"
-                    android:orientation="horizontal"
-                    android:paddingTop="1dp"
-                    android:weightSum="1">
+                    android:contextClickable="true"
+                    android:isScrollContainer="true"
+                    android:paddingRight="10dp"
+                    android:scrollHorizontally="true"
+                    android:text="0"
+                    android:textAlignment="textEnd"
+                    android:textColor="@android:color/black"
+                    android:textColorLink="@android:color/background_light"
+                    android:textIsSelectable="true"
+                    android:textSize="35sp" />
 
-                    <TextView
-                        android:id="@+id/operationDisplay"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:contextClickable="true"
-                        android:isScrollContainer="true"
-                        android:paddingRight="10dp"
-                        android:text="0"
-                        android:textAlignment="textEnd"
-                        android:textColor="@android:color/black"
-                        android:textColorLink="@android:color/background_light"
-                        android:textSize="35sp" />
-
-                </LinearLayout>
-
-                <LinearLayout
+                <TextView
+                    android:id="@+id/resultDisplay"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="1.00"
-                    android:orientation="horizontal"
-                    android:weightSum="1">
+                    android:paddingRight="10dp"
+                    android:scrollHorizontally="true"
+                    android:textAlignment="textEnd"
+                    android:textIsSelectable="true"
+                    android:textSize="35sp" />
 
-                    <TextView
-                        android:id="@+id/resultDisplay"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:paddingRight="10dp"
-                        android:textAlignment="textEnd"
-                        android:textSize="35sp" />
-                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout

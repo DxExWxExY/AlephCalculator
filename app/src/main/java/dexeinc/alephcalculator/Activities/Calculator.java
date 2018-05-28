@@ -1,4 +1,4 @@
-package dexeinc.alephcalculator;
+package dexeinc.alephcalculator.Activities;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -16,6 +16,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.EmptyStackException;
+
+import dexeinc.alephcalculator.Evaluation.Operation;
+import dexeinc.alephcalculator.R;
 
 public class Calculator extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
