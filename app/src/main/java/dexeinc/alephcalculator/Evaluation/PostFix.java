@@ -152,7 +152,7 @@ public class PostFix {
         }
         if (evaluator.peek().remainder(BigDecimal.ONE).compareTo(BigDecimal.ZERO) == 0) {
             result = String.valueOf(evaluator.peek());
-            result = result.substring(0, result.length()-3);
+            result = result.substring(0, result.indexOf("."));
         }
         else {
             result = String.valueOf(evaluator.peek());

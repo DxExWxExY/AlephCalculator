@@ -10,6 +10,8 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.TextView;
@@ -49,6 +51,17 @@ public class Calculator extends AppCompatActivity
         initNavBar();
         initDisplay();
         initButtons();
+    }
+
+    /**
+     * {@inheritDoc}
+     * @param menu
+     * @return
+     */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.app_menu, menu);
+        return true;
     }
 
     /**
@@ -194,9 +207,8 @@ public class Calculator extends AppCompatActivity
                 expression.getAnswer();
                 operationDisplay.setText(expression.operation);
                 resultDisplay.setText(expression.result);
-            } catch (EmptyStackException a) {
-                String e1 = "Incomplete Operation";
-                Toast.makeText(getApplicationContext(), e1, Toast.LENGTH_LONG).show();
+            } catch (Exception a) {
+                Toast.makeText(getApplicationContext(), a.toString(), Toast.LENGTH_LONG).show();
             }
         });
 
@@ -250,8 +262,8 @@ public class Calculator extends AppCompatActivity
 
     /**
      * {@inheritDoc}
-     * @param item System provided variable.
-     * @return System used.
+     * @param item
+     * @return
      */
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -275,6 +287,23 @@ public class Calculator extends AppCompatActivity
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
+        return true;
+    }
+
+    /**
+     * {@inheritDoc}
+     * @param item
+     * @return
+     */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.settings:
+                Intent about = new Intent(Calculator.this, About.class);
+                Toast.makeText(this, R.string.app_name,Toast.LENGTH_SHORT).show();
+                startActivity(about);
+                return true;
+        }
         return true;
     }
 }
