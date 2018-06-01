@@ -54,13 +54,14 @@ public class History extends AppCompatActivity
             drawer.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
+            finish();
         }
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.app_menu, menu);
+        getMenuInflater().inflate(R.menu.history_menu, menu);
         return true;
     }
 
@@ -80,10 +81,6 @@ public class History extends AppCompatActivity
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
-    static void killActivity() {
-        // TODO: 5/31/2018 Kill activity on item selection.
-    }
-
     /**
      * {@inheritDoc}
      * @param item
@@ -93,9 +90,15 @@ public class History extends AppCompatActivity
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         // Handle navigation view item clicks here.
         switch (item.getItemId()) {
+            case R.id.nav_calc:
+                Intent calc = new Intent(History.this, Calculator.class);
+                startActivity(calc);
+                finish();
+                return true;
             case R.id.nav_about:
                 Intent about = new Intent(History.this, About.class);
                 startActivity(about);
+                finish();
                 return true;
             case R.id.nav_other:
                 Intent store = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/search?q=DxExWxExY&c=apps&hl=en"));
@@ -122,6 +125,9 @@ public class History extends AppCompatActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.delete_history:
+                // TODO: 6/1/2018 Delete History
+                break;
             case R.id.settings:
                 Toast.makeText(this,"Coming Soon!", Toast.LENGTH_LONG).show();
                 return true;

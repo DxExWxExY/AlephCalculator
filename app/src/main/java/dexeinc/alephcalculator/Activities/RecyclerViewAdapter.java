@@ -44,7 +44,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             cal.putExtra("hOperation", history.get(position).operation);
             cal.putExtra("hResult", history.get(position).result);
             mContext.startActivity(cal);
-            History.killActivity();
         });
     }
 

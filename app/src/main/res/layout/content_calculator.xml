@@ -25,7 +25,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="@android:color/darker_gray"
+                android:background="@color/colorBackground"
                 android:contextClickable="false"
                 android:isScrollContainer="false"
                 android:orientation="vertical"
@@ -56,16 +56,17 @@
                     android:paddingRight="10dp"
                     android:scrollHorizontally="true"
                     android:textAlignment="textEnd"
-                    android:textColor="@android:color/holo_orange_light"
+                    android:textColor="@android:color/holo_orange_dark"
                     android:textIsSelectable="true"
-                    android:textSize="35sp" />
+                    android:textSize="35sp"
+                    android:typeface="monospace" />
 
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@android:color/darker_gray"
+                android:background="@color/colorBackground"
                 android:orientation="horizontal"
                 android:weightSum="4">
 
@@ -73,7 +74,7 @@
                     android:id="@+id/buttonC"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
+                    android:layout_margin="7dp"
                     android:layout_weight="1"
                     android:background="@drawable/button_clear"
                     android:soundEffectsEnabled="true"
@@ -85,7 +86,7 @@
                     android:id="@+id/buttonPercent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
+                    android:layout_margin="7dp"
                     android:layout_weight="1"
                     android:background="@drawable/button_operation"
                     android:soundEffectsEnabled="true"
@@ -97,11 +98,11 @@
                     android:id="@+id/buttonParenthesis"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
+                    android:layout_margin="7dp"
                     android:layout_weight="1"
                     android:background="@drawable/button_operation"
                     android:soundEffectsEnabled="true"
-                    android:text="( )"
+                    android:text="(  )"
                     android:textColor="#FFFFFF"
                     android:textSize="30sp" />
 
@@ -109,7 +110,7 @@
                     android:id="@+id/buttonDel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
+                    android:layout_margin="7dp"
                     android:layout_weight="1"
                     android:background="@drawable/button_delete"
                     android:soundEffectsEnabled="true"
@@ -121,7 +122,7 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@android:color/darker_gray"
+                android:background="@color/colorBackground"
                 android:orientation="horizontal"
                 android:weightSum="4">
 
@@ -129,7 +130,7 @@
                     android:id="@+id/button7"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
+                    android:layout_margin="7dp"
                     android:layout_weight="1"
                     android:background="@drawable/button_bg"
                     android:soundEffectsEnabled="true"
@@ -141,7 +142,7 @@
                     android:id="@+id/button8"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
+                    android:layout_margin="7dp"
                     android:layout_weight="1"
                     android:background="@drawable/button_bg"
                     android:soundEffectsEnabled="true"
@@ -153,7 +154,7 @@
                     android:id="@+id/button9"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
+                    android:layout_margin="7dp"
                     android:layout_weight="1"
                     android:background="@drawable/button_bg"
                     android:soundEffectsEnabled="true"
@@ -165,7 +166,7 @@
                     android:id="@+id/divide"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
+                    android:layout_margin="7dp"
                     android:layout_weight="1"
                     android:background="@drawable/button_operation"
                     android:soundEffectsEnabled="true"
@@ -176,9 +177,9 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@android:color/darker_gray"
+                android:background="@color/colorBackground"
                 android:orientation="horizontal"
                 android:weightSum="4">
 
@@ -186,7 +187,7 @@
                     android:id="@+id/button4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
+                    android:layout_margin="7dp"
                     android:layout_weight="1"
                     android:background="@drawable/button_bg"
                     android:soundEffectsEnabled="true"
@@ -198,7 +199,7 @@
                     android:id="@+id/button5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
+                    android:layout_margin="7dp"
                     android:layout_weight="1"
                     android:background="@drawable/button_bg"
                     android:soundEffectsEnabled="true"
@@ -210,7 +211,7 @@
                     android:id="@+id/button6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
+                    android:layout_margin="7dp"
                     android:layout_weight="1"
                     android:background="@drawable/button_bg"
                     android:soundEffectsEnabled="true"
@@ -222,7 +223,7 @@
                     android:id="@+id/multiply"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
+                    android:layout_margin="7dp"
                     android:layout_weight="1"
                     android:background="@drawable/button_operation"
                     android:soundEffectsEnabled="true"
@@ -233,9 +234,9 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@android:color/darker_gray"
+                android:background="@color/colorBackground"
                 android:orientation="horizontal"
                 android:weightSum="4">
 
@@ -243,7 +244,7 @@
                     android:id="@+id/button1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
+                    android:layout_margin="7dp"
                     android:layout_weight="1"
                     android:background="@drawable/button_bg"
                     android:soundEffectsEnabled="true"
@@ -255,7 +256,7 @@
                     android:id="@+id/button2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
+                    android:layout_margin="7dp"
                     android:layout_weight="1"
                     android:background="@drawable/button_bg"
                     android:soundEffectsEnabled="true"
@@ -267,7 +268,7 @@
                     android:id="@+id/button3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
+                    android:layout_margin="7dp"
                     android:layout_weight="1"
                     android:background="@drawable/button_bg"
                     android:soundEffectsEnabled="true"
@@ -279,7 +280,7 @@
                     android:id="@+id/substract"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
+                    android:layout_margin="7dp"
                     android:layout_weight="1"
                     android:background="@drawable/button_operation"
                     android:soundEffectsEnabled="true"
@@ -290,9 +291,9 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@android:color/darker_gray"
+                android:background="@color/colorBackground"
                 android:orientation="horizontal"
                 android:weightSum="4">
 
@@ -300,7 +301,7 @@
                     android:id="@+id/buttonDot"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
+                    android:layout_margin="7dp"
                     android:layout_weight="1"
                     android:background="@drawable/button_bg"
                     android:soundEffectsEnabled="true"
@@ -312,7 +313,7 @@
                     android:id="@+id/button0"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
+                    android:layout_margin="7dp"
                     android:layout_weight="1"
                     android:background="@drawable/button_bg"
                     android:soundEffectsEnabled="true"
@@ -324,7 +325,7 @@
                     android:id="@+id/buttonEquals"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
+                    android:layout_margin="7dp"
                     android:layout_weight="1"
                     android:background="@drawable/button_equals"
                     android:soundEffectsEnabled="true"
@@ -336,7 +337,7 @@
                     android:id="@+id/add"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
+                    android:layout_margin="7dp"
                     android:layout_weight="1"
                     android:background="@drawable/button_operation"
                     android:soundEffectsEnabled="true"

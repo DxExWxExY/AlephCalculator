@@ -63,6 +63,7 @@ public class About extends AppCompatActivity
             drawer.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
+            finish();
         }
     }
 
@@ -79,6 +80,7 @@ public class About extends AppCompatActivity
             case R.id.nav_calc:
                 Intent calc = new Intent(About.this, Calculator.class);
                 startActivity(calc);
+                finish();
                 return true;
             case R.id.nav_other:
                 Intent store = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/search?q=DxExWxExY&c=apps&hl=en"));
