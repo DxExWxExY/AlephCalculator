@@ -4,9 +4,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.view.View;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -17,10 +16,18 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import java.util.LinkedList;
+
+import dexeinc.alephcalculator.Evaluation.Operation;
 import dexeinc.alephcalculator.R;
 
 public class History extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    /**
+     * Linked list used for the history implementation.
+     */
+    private static LinkedList<Operation> history = new LinkedList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +44,7 @@ public class History extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        readHistory();
     }
 
     @Override
@@ -54,6 +62,26 @@ public class History extends AppCompatActivity
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.app_menu, menu);
         return true;
+    }
+
+    /**
+     * Reads operations in file to populate history list.
+     */
+    private void readHistory() {
+        history.add(new Operation("2+2","4"));
+        history.add(new Operation("3*3", "9"));
+        initRecyclerView();
+    }
+
+    private void initRecyclerView() {
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.list_viewer);
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(history, this);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+    }
+
+    static void killActivity() {
+        // TODO: 5/31/2018 Kill activity on item selection.
     }
 
     /**

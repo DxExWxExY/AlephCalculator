@@ -13,6 +13,13 @@ public class Operation {
     private Boolean dotReset = true;
     private int parenthesisCount = 0;
 
+    public Operation() {}
+
+    public Operation(String operation, String result) {
+        this.operation = operation;
+        this.result = result;
+    }
+
     public void numberPressed(int num) {
         /*if the operation operationDisplay has a 0*/
         if (operation.equals("0")) {

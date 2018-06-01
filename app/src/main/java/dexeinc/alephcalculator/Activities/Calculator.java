@@ -37,11 +37,6 @@ public class Calculator extends AppCompatActivity
     private TextView resultDisplay;
 
     /**
-     * Linked list used for the history implementation.
-     */
-    private static LinkedList<Operation> history = new LinkedList<>();
-
-    /**
      * Method to be called on launch.
      * {@inheritDoc}
      * @param savedInstanceState System provided variable.
@@ -49,7 +44,7 @@ public class Calculator extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        expression = new Operation();
+        initOperation();
         initNavBar();
         initDisplay();
         initButtons();
@@ -67,10 +62,14 @@ public class Calculator extends AppCompatActivity
     }
 
     /**
-     * Reads operations in file to populate history list.
+     * This method detects if the history activity called the calculator with and operation.
      */
-    private void readHistory() {
-        //FileReader file = new FileReader();
+    public void initOperation() {
+        if (getIntent().hasExtra("hOperation") && getIntent().hasExtra("hResult")) {
+            expression = new Operation(getIntent().getStringExtra("hOperation"), getIntent().getStringExtra("hResult"));
+        } else {
+            expression = new Operation();
+        }
     }
 
     /**
