@@ -56,7 +56,7 @@
                     android:paddingRight="10dp"
                     android:scrollHorizontally="true"
                     android:textAlignment="textEnd"
-                    android:textColor="@android:color/holo_orange_dark"
+                    android:textColor="@android:color/holo_orange_light"
                     android:textIsSelectable="true"
                     android:textSize="35sp"
                     android:typeface="monospace" />

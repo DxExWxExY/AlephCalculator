@@ -14,8 +14,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.LinkedList;
 
 import dexeinc.alephcalculator.Evaluation.Operation;
@@ -27,7 +34,8 @@ public class History extends AppCompatActivity
     /**
      * Linked list used for the history implementation.
      */
-    private static LinkedList<Operation> history = new LinkedList<>();
+    private static LinkedList<Operation> history;
+    private RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +52,12 @@ public class History extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        readHistory();
+        try {
+            readHistory();
+        } catch (IOException e) {
+            initRecyclerView();
+            recyclerView.setVisibility(View.INVISIBLE);
+        }
     }
 
     @Override
@@ -68,14 +81,24 @@ public class History extends AppCompatActivity
     /**
      * Reads operations in file to populate history list.
      */
-    private void readHistory() {
-        history.add(new Operation("2+2","4"));
-        history.add(new Operation("3*3", "9"));
+    private void readHistory() throws IOException {
+        history = new LinkedList<>();
+        InputStream inputStream = getAssets().open("history.txt");
+        int size = inputStream.available();
+        byte[] buffer = new byte[size];
+        inputStream.read(buffer);
+        inputStream.close();
+        String line = new String(buffer);
+        String[] operations = line.split(",");
+        for (String operation: operations) {
+            String[] expression = operation.split("=");
+            history.add(new Operation(expression[0], expression[1]));
+        }
         initRecyclerView();
     }
 
     private void initRecyclerView() {
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.list_viewer);
+        recyclerView = (RecyclerView) findViewById(R.id.list_viewer);
         RecyclerViewAdapter adapter = new RecyclerViewAdapter(history, this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

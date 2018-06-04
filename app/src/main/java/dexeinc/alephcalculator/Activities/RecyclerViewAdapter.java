@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.LinkedList;
@@ -55,13 +56,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView operation, result;
-        ConstraintLayout parentLayout;
+        RelativeLayout parentLayout;
 
         ViewHolder(View itemView) {
             super(itemView);
             operation = (TextView) itemView.findViewById(R.id.operation_history);
             result = (TextView) itemView.findViewById(R.id.result_history);
-            parentLayout = (ConstraintLayout) itemView.findViewById(R.id.list_layout);
+            parentLayout = (RelativeLayout) itemView.findViewById(R.id.list_layout);
         }
     }
 }
