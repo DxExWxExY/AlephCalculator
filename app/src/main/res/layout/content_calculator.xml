@@ -46,7 +46,8 @@
                     android:textColor="@android:color/black"
                     android:textColorLink="@android:color/background_light"
                     android:textIsSelectable="true"
-                    android:textSize="35sp" />
+                    android:textSize="35sp"
+                    android:gravity="end" />
 
                 <TextView
                     android:id="@+id/resultDisplay"
@@ -59,7 +60,8 @@
                     android:textColor="@android:color/holo_orange_light"
                     android:textIsSelectable="true"
                     android:textSize="35sp"
-                    android:typeface="monospace" />
+                    android:typeface="monospace"
+                    android:gravity="end" />
 
             </LinearLayout>
 
@@ -277,7 +279,7 @@
                     android:textSize="30sp" />
 
                 <Button
-                    android:id="@+id/substract"
+                    android:id="@+id/subtract"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="7dp"
