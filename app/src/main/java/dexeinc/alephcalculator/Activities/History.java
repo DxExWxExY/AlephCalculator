@@ -13,7 +13,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,15 +22,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.LinkedList;
 
-import dexeinc.alephcalculator.Evaluation.Operation;
+import dexeinc.alephcalculator.Support.OperationBuilder;
 import dexeinc.alephcalculator.R;
 
 public class History extends AppCompatActivity
@@ -40,7 +35,7 @@ public class History extends AppCompatActivity
     /**
      * Linked list used for the history implementation.
      */
-    private static LinkedList<Operation> history;
+    private static LinkedList<OperationBuilder> history;
     private RecyclerView recyclerView;
 
     @Override
@@ -98,7 +93,7 @@ public class History extends AppCompatActivity
         String[] operations = line.split(",");
         for (String operation: operations) {
             String[] expression = operation.split("=");
-            history.add(new Operation(expression[0], expression[1]));
+            history.add(new OperationBuilder(expression[0], expression[1]));
         }
         initRecyclerView();
     }
@@ -166,10 +161,10 @@ public class History extends AppCompatActivity
     public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         private static final String TAG = "RecyclerViewAdapter";
 
-        private LinkedList<Operation> history;
+        private LinkedList<OperationBuilder> history;
         private Context mContext;
 
-        RecyclerViewAdapter(LinkedList<Operation> history, Context mContext) {
+        RecyclerViewAdapter(LinkedList<OperationBuilder> history, Context mContext) {
             this.history = history;
             this.mContext = mContext;
         }
@@ -182,7 +177,6 @@ public class History extends AppCompatActivity
 
         @Override
         public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-            Log.d(TAG, "onBindViewHolder: called");
             ViewHolder holder1 = (ViewHolder) holder;
             holder1.operation.setText(history.get(position).operation);
             holder1.result.setText(history.get(position).result);
@@ -190,7 +184,9 @@ public class History extends AppCompatActivity
                 Intent cal = new Intent(mContext, Calculator.class);
                 cal.putExtra("hOperation", history.get(position).operation);
                 cal.putExtra("hResult", history.get(position).result);
+                cal.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 mContext.startActivity(cal);
+                History.this.finish();
             });
         }
 

@@ -16,7 +16,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import dexeinc.alephcalculator.Evaluation.Operation;
+import dexeinc.alephcalculator.Support.OperationBuilder;
 import dexeinc.alephcalculator.R;
 
 public class Calculator extends AppCompatActivity
@@ -25,7 +25,7 @@ public class Calculator extends AppCompatActivity
     /**
      * Variables to be used by button events.
      */
-    private Operation expression;
+    private OperationBuilder expression;
     private TextView operationDisplay;
     private TextView resultDisplay;
 
@@ -59,9 +59,9 @@ public class Calculator extends AppCompatActivity
      */
     public void initOperation() {
         if (getIntent().hasExtra("hOperation") && getIntent().hasExtra("hResult")) {
-            expression = new Operation(getIntent().getStringExtra("hOperation"), getIntent().getStringExtra("hResult"));
+            expression = new OperationBuilder(getIntent().getStringExtra("hOperation"), getIntent().getStringExtra("hResult"));
         } else {
-            expression = new Operation();
+            expression = new OperationBuilder();
         }
     }
 
