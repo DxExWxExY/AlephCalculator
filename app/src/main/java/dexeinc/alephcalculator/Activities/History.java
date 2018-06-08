@@ -50,7 +50,7 @@ public class History extends AppCompatActivity implements NavigationView.OnNavig
         initNavBar();
         try {
             readHistory();
-        } catch (SQLException e) {
+        } catch (Exception e) {
             initRecyclerView();
             recyclerView.setVisibility(View.INVISIBLE);
         }
@@ -244,7 +244,7 @@ public class History extends AppCompatActivity implements NavigationView.OnNavig
          */
         @Override
         public int getItemCount() {
-            return history.size();
+            return history == null ? 0 : history.size();
         }
 
         /**
