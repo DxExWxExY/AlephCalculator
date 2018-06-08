@@ -2,6 +2,8 @@ package dexeinc.alephcalculator.Activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.SQLException;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -44,7 +46,7 @@ public class History extends AppCompatActivity implements NavigationView.OnNavig
         initNavBar();
         try {
             readHistory();
-        } catch (IOException e) {
+        } catch (SQLException e) {
             initRecyclerView();
             recyclerView.setVisibility(View.INVISIBLE);
         }
@@ -86,15 +88,21 @@ public class History extends AppCompatActivity implements NavigationView.OnNavig
     /**
      * Reads operations in file to populate history list.
      */
-    private void readHistory() throws IOException {
-        history = new LinkedList<>();
-        InputStream inputStream = getAssets().open("history.txt");
-        int size = inputStream.available();
-        byte[] buffer = new byte[size];
-        inputStream.read(buffer);
-        inputStream.close();
-        String line = new String(buffer);
+    private void readHistory() {
+        Cursor data = Calculator.historyDatabase.getOperations();
+        if (data.getCount() == 0) {
+            throw new SQLException();
+        }
+        StringBuilder buffer = new StringBuilder();
+        while (data.moveToNext()) {
+            buffer.append(data.getString(0))
+                    .append("=")
+                    .append(data.getString(1))
+                    .append(",");
+        }
+        String line = buffer.toString().substring(0,buffer.toString().length()-1);
         String[] operations = line.split(",");
+        history = new LinkedList<>();
         for (String operation: operations) {
             String[] expression = operation.split("=");
             history.add(new OperationBuilder(expression[0], expression[1]));

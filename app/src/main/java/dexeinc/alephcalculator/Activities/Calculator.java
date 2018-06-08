@@ -29,7 +29,7 @@ public class Calculator extends AppCompatActivity
     private OperationBuilder expression;
     private TextView operationDisplay;
     private TextView resultDisplay;
-    private static HistoryDatabase historyDatabase;
+    public static HistoryDatabase historyDatabase;
 
     /**
      * Method to be called on launch.
@@ -204,6 +204,8 @@ public class Calculator extends AppCompatActivity
                 expression.getAnswer();
                 operationDisplay.setText(expression.operation);
                 resultDisplay.setText(expression.result);
+                historyDatabase.addOperation(expression.operation, expression.result);
+                expression = new OperationBuilder();
             } catch (Exception a) {
                 Toast.makeText(getApplicationContext(), a.toString(), Toast.LENGTH_LONG).show();
             }
