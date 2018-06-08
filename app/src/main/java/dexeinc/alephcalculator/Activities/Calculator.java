@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import dexeinc.alephcalculator.Support.HistoryDatabase;
 import dexeinc.alephcalculator.Support.OperationBuilder;
 import dexeinc.alephcalculator.R;
 
@@ -28,6 +29,7 @@ public class Calculator extends AppCompatActivity
     private OperationBuilder expression;
     private TextView operationDisplay;
     private TextView resultDisplay;
+    private static HistoryDatabase historyDatabase;
 
     /**
      * Method to be called on launch.
@@ -37,6 +39,7 @@ public class Calculator extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        historyDatabase = new HistoryDatabase(this);
         initOperation();
         initNavBar();
         initDisplay();

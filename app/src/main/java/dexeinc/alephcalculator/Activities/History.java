@@ -26,11 +26,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.LinkedList;
 
+import dexeinc.alephcalculator.Support.HistoryDatabase;
 import dexeinc.alephcalculator.Support.OperationBuilder;
 import dexeinc.alephcalculator.R;
 
-public class History extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+public class History extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     /**
      * Linked list used for the history implementation.
@@ -41,6 +41,16 @@ public class History extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        initNavBar();
+        try {
+            readHistory();
+        } catch (IOException e) {
+            initRecyclerView();
+            recyclerView.setVisibility(View.INVISIBLE);
+        }
+    }
+
+    private void initNavBar() {
         setContentView(R.layout.activity_history);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -53,12 +63,6 @@ public class History extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        try {
-            readHistory();
-        } catch (IOException e) {
-            initRecyclerView();
-            recyclerView.setVisibility(View.INVISIBLE);
-        }
     }
 
     @Override
@@ -158,8 +162,9 @@ public class History extends AppCompatActivity
         }
         return true;
     }
+
+    /***************************************************************************************/
     public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-        private static final String TAG = "RecyclerViewAdapter";
 
         private LinkedList<OperationBuilder> history;
         private Context mContext;
@@ -195,6 +200,7 @@ public class History extends AppCompatActivity
             return history.size();
         }
 
+        /*****************************************************************/
         class ViewHolder extends RecyclerView.ViewHolder {
 
             TextView operation, result;
