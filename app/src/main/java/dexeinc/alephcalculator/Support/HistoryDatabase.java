@@ -8,10 +8,10 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class HistoryDatabase extends SQLiteOpenHelper {
 
-    public static final String DB_NAME = "operation_history.db";
-    public static final String TB_NAME = "history";
-    public static final String OP = "OP";
-    public static final String RS = "RS";
+    private static final String DB_NAME = "operation_history.db";
+    private static final String TB_NAME = "history";
+    private static final String OP = "OP";
+    private static final String RS = "RS";
 
     public HistoryDatabase(Context context) {
         super(context, DB_NAME, null, 1);
@@ -38,7 +38,11 @@ public class HistoryDatabase extends SQLiteOpenHelper {
 
     public Cursor getOperations() {
         SQLiteDatabase db = getWritableDatabase();
-        Cursor res = db.rawQuery("SELECT * FROM " + TB_NAME, null);
-        return res;
+        return db.rawQuery("SELECT * FROM " + TB_NAME, null);
+    }
+
+    public void deleteOperations() {
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL("DELETE FROM " + TB_NAME);
     }
 }

@@ -162,7 +162,8 @@ public class History extends AppCompatActivity implements NavigationView.OnNavig
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.delete_history:
-                // TODO: 6/1/2018 Delete History
+                Calculator.historyDatabase.deleteOperations();
+                finish();
                 break;
             case R.id.settings:
                 Toast.makeText(this,"Coming Soon!", Toast.LENGTH_LONG).show();
