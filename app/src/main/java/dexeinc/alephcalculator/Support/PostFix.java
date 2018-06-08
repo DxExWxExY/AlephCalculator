@@ -151,7 +151,9 @@ public class PostFix {
         }
         if (evaluator.peek().remainder(BigDecimal.ONE).compareTo(BigDecimal.ZERO) == 0) {
             result = String.valueOf(evaluator.peek());
-            result = result.substring(0, result.indexOf("."));
+            try {
+                result = result.substring(0, result.indexOf("."));
+            } catch (StringIndexOutOfBoundsException ignored) { }
         }
         else {
             result = String.valueOf(evaluator.peek());

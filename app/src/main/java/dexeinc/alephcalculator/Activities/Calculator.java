@@ -205,9 +205,10 @@ public class Calculator extends AppCompatActivity
                 operationDisplay.setText(expression.operation);
                 resultDisplay.setText(expression.result);
                 historyDatabase.addOperation(expression.operation, expression.result);
-                expression = new OperationBuilder();
             } catch (Exception a) {
                 Toast.makeText(getApplicationContext(), a.toString(), Toast.LENGTH_LONG).show();
+                System.out.println(expression.operation + " " + expression.result);
+                a.printStackTrace();
             }
         });
 

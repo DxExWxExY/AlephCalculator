@@ -40,6 +40,10 @@ public class History extends AppCompatActivity implements NavigationView.OnNavig
     private static LinkedList<OperationBuilder> history;
     private RecyclerView recyclerView;
 
+    /**
+     * {@inheritDoc}
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +56,9 @@ public class History extends AppCompatActivity implements NavigationView.OnNavig
         }
     }
 
+    /**
+     * Initializes the navigation bar.
+     */
     private void initNavBar() {
         setContentView(R.layout.activity_history);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -67,6 +74,9 @@ public class History extends AppCompatActivity implements NavigationView.OnNavig
         navigationView.setNavigationItemSelectedListener(this);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -78,6 +88,11 @@ public class History extends AppCompatActivity implements NavigationView.OnNavig
         }
     }
 
+    /**
+     * {@inheritDoc}
+     * @param menu
+     * @return
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -110,6 +125,9 @@ public class History extends AppCompatActivity implements NavigationView.OnNavig
         initRecyclerView();
     }
 
+    /**
+     * Initializes the RecyclerViewer for the history of operations.
+     */
     private void initRecyclerView() {
         recyclerView = (RecyclerView) findViewById(R.id.list_viewer);
         RecyclerViewAdapter adapter = new RecyclerViewAdapter(history, this);
@@ -172,9 +190,14 @@ public class History extends AppCompatActivity implements NavigationView.OnNavig
         return true;
     }
 
-    /***************************************************************************************/
+    /**
+     * Class required to use a RecyclerViewer.
+     */
     public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
+        /**
+         * Fields used by the RecyclerViewer.
+         */
         private LinkedList<OperationBuilder> history;
         private Context mContext;
 
@@ -183,12 +206,23 @@ public class History extends AppCompatActivity implements NavigationView.OnNavig
             this.mContext = mContext;
         }
 
+        /**
+         * {@inheritDoc}
+         * @param parent
+         * @param viewType
+         * @return
+         */
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.history_item, parent, false);
             return new ViewHolder(view);
         }
 
+        /**
+         * {@inheritDoc}
+         * @param holder
+         * @param position
+         */
         @Override
         public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
             ViewHolder holder1 = (ViewHolder) holder;
@@ -204,14 +238,23 @@ public class History extends AppCompatActivity implements NavigationView.OnNavig
             });
         }
 
+        /**
+         * {@inheritDoc}
+         * @return
+         */
         @Override
         public int getItemCount() {
             return history.size();
         }
 
-        /*****************************************************************/
+        /**
+         * Instance used by RecyclerViewer.
+         */
         class ViewHolder extends RecyclerView.ViewHolder {
 
+            /**
+             * Fields used by the history_item layout.
+             */
             TextView operation, result;
             RelativeLayout parentLayout;
 
