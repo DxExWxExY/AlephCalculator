@@ -8,12 +8,15 @@ public class OperationBuilder {
     /**
      * The following variables are required to build an expression.
      */
-    public String operation = "0";
-    public String result = "";
+    public String operation;
+    public String result;
     private Boolean dotReset = true;
     private int parenthesisCount = 0;
 
-    public OperationBuilder() {}
+    public OperationBuilder() {
+        this.operation = "0";
+        this.result = "";
+    }
 
     public OperationBuilder(String operation, String result) {
         this.operation = operation;
@@ -34,15 +37,15 @@ public class OperationBuilder {
     }
 
     public void deleteOperation() {
-        operation = "0";
-        result = "";
-        dotReset = true;
-        parenthesisCount = 0;
+        this.operation = "0";
+        this.result = "";
+        this.dotReset = true;
+        this.parenthesisCount = 0;
     }
 
     public void insertAddition() {
         /*if the resultDisplay is not empty, concatenate symbol*/
-        if (!result.equals("")) {
+        if (!result.isEmpty()) {
             /*if the resultDisplay is negative*/
             if (result.charAt(0) == '-') {
                 operation = "(" + result + ")" + "+";
@@ -194,34 +197,31 @@ public class OperationBuilder {
             result = "";
         }
         /*if operation string not empty*/
-        else if (!operation.equals("")) {
+        else if (!operation.isEmpty()) {
+            int lastIndex = operation.length() - 1;
             /*if last is a dot*/
             if (operation.charAt(operation.length()-1) == '.') {
-                operation = operation.substring(0, operation.length() - 1);
-
+                operation = operation.substring(0, lastIndex);
                 dotReset = true;
             }
             /*if last is a multiplication parenthesis*/
-            else if (operation.charAt(operation.length()-1) == '(' && operation.charAt(operation.length()-2) == '*') {
+            else if (operation.matches("\\)\\*$")) {
                 operation = operation.substring(0, operation.length() - 2);
-
                 parenthesisCount--;
             }
             /*if last is an opening parenthesis*/
-            else if (operation.charAt(operation.length()-1) == '(') {
-                operation = operation.substring(0, operation.length() - 1);
-
+            else if (operation.matches("\\($")) {
+                operation = operation.substring(0, lastIndex);
                 parenthesisCount--;
             }
             /*if last is an opening parenthesis*/
-            else if (operation.charAt(operation.length()-1) == ')') {
-                operation = operation.substring(0, operation.length() - 1);
-
+            else if (operation.matches("\\)$")) {
+                operation = operation.substring(0, lastIndex);
                 parenthesisCount++;
             }
             /*if last is "[0-9*+-/]"*/
             else {
-                operation = operation.substring(0, operation.length() - 1);
+                operation = operation.substring(0, lastIndex);
 
             }
         }
@@ -230,59 +230,51 @@ public class OperationBuilder {
     public void insertParenthesis() {
         /*Checks if operation is equal to 0 and replaces it with an opening parenthesis*/
         if (operation.equals("0")) {
-            operation = "(";
-
+            operation = "("; // FIXME
             parenthesisCount++;
         }
         /*Checks if the last character isn't a digit and parenthesis count equals 0*/
-        else if (parenthesisCount == 0  && !Character.isDigit(operation.charAt(operation.length()-1))) {
-            if (operation.charAt(operation.length()-1) == ')') {
+        else if (parenthesisCount == 0  && !operation.matches("\\d$")) {
+            if (operation.matches("\\)$")) {
                 operation += "*(";
-
                 parenthesisCount++;
             }
             else {
                 operation += "(";
-
                 parenthesisCount++;
             }
         }
         /*Checks if the last character is a digit and parenthesis count doesn't equal 0*/
-        else if (parenthesisCount != 0 && Character.isDigit(operation.charAt(operation.length()-1))) {
+        else if (parenthesisCount != 0 && operation.matches("\\d$")) {
             operation += ")";
-
             parenthesisCount--;
         }
         /*Checks if the las char is a num or parenthesis then adds a *( to the operation*/
-        else if (parenthesisCount == 0 &&
-                (Character.isDigit(operation.charAt(operation.length()-1)) || operation.charAt(operation.length()-1) == ')')) {
+        else if (parenthesisCount == 0 && operation.matches("[\\d)]$")) {
             operation += "*(";
-
             parenthesisCount++;
         }
         /*Checks if the last char is ) and if the parenthesis count  != equal 0*/
-        else if (parenthesisCount != 0 && operation.charAt(operation.length()-1) == ')') {
+        else if (parenthesisCount != 0 && operation.matches("\\)$")) {
             operation += ")";
-
             parenthesisCount--;
         }
         /*Checks if the last char is an operand and adds an ( */
-        else if (parenthesisCount != 0 && !Character.isDigit(operation.charAt(operation.length()-1))) {
+        else if (parenthesisCount != 0 && operation.matches("[-+*/]$")) {
             operation += "(";
-
             parenthesisCount++;
         }
     }
 
     public void getPercentage() {
-        double percent = Double.parseDouble(PostFix.toPostfix(operation)) / 100;
-        result = String.valueOf(percent);
+        double percent = Double.parseDouble(ExpressionEvaluator.evaluate(operation)) / 100;
+//        this.result = String.format();
     }
 
     public void getAnswer() {
-        if (Character.toString(operation.charAt(operation.length() - 1)).matches("[-+*/]")) {
+        if (operation.matches("[-+*/]$")) {
             operation = operation.substring(0, operation.length() - 1);
         }
-        result = PostFix.toPostfix(operation);
+        result = ExpressionEvaluator.evaluate(operation);
     }
 }

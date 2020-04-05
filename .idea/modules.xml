@@ -3,6 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/AlephCalculator.iml" filepath="$PROJECT_DIR$/AlephCalculator.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Calculator.iml" filepath="$PROJECT_DIR$/Calculator.iml" group="Calculator" />
+      <module fileurl="file://$PROJECT_DIR$/app/Calculator-app.iml" filepath="$PROJECT_DIR$/app/Calculator-app.iml" group="Calculator/app" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

@@ -73,14 +73,14 @@ public class Calculator extends AppCompatActivity
      */
     public void initNavBar() {
         setContentView(R.layout.activity_calculator);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
     }
 
@@ -88,56 +88,36 @@ public class Calculator extends AppCompatActivity
      * Initializes buttons and listeners.
      */
     public void initButtons() {
-        Button one = (Button) findViewById(R.id.button1);
-        Button two = (Button) findViewById(R.id.button2);
-        Button three = (Button) findViewById(R.id.button3);
-        Button four = (Button) findViewById(R.id.button4);
-        Button five = (Button) findViewById(R.id.button5);
-        Button six = (Button) findViewById(R.id.button6);
-        Button seven = (Button) findViewById(R.id.button7);
-        Button eight = (Button) findViewById(R.id.button8);
-        Button nine = (Button) findViewById(R.id.button9);
-        Button zero = (Button) findViewById(R.id.button0);
-        Button clear = (Button) findViewById(R.id.buttonC);
-        Button equals = (Button) findViewById(R.id.buttonEquals);
-        Button dot = (Button) findViewById(R.id.buttonDot);
-        Button del = (Button) findViewById(R.id.buttonDel);
-        Button parenthesis = (Button) findViewById(R.id.buttonParenthesis);
-        Button percent = (Button) findViewById(R.id.buttonPercent);
-        Button divide = (Button) findViewById(R.id.divide);
-        Button sub = (Button) findViewById(R.id.subtract);
-        Button add = (Button) findViewById(R.id.add);
-        Button mult = (Button) findViewById(R.id.multiply);
+        Button one = findViewById(R.id.button1);
+        Button two = findViewById(R.id.button2);
+        Button three = findViewById(R.id.button3);
+        Button four = findViewById(R.id.button4);
+        Button five = findViewById(R.id.button5);
+        Button six = findViewById(R.id.button6);
+        Button seven = findViewById(R.id.button7);
+        Button eight = findViewById(R.id.button8);
+        Button nine = findViewById(R.id.button9);
+        Button zero = findViewById(R.id.button0);
+        Button clear = findViewById(R.id.buttonC);
+        Button equals = findViewById(R.id.buttonEquals);
+        Button dot = findViewById(R.id.buttonDot);
+        Button del = findViewById(R.id.buttonDel);
+        Button parenthesis = findViewById(R.id.buttonParenthesis);
+        Button percent = findViewById(R.id.buttonPercent);
+        Button divide = findViewById(R.id.divide);
+        Button sub = findViewById(R.id.subtract);
+        Button add = findViewById(R.id.add);
+        Button mult = findViewById(R.id.multiply);
 
-        one.setOnClickListener(v -> {
-            expression.numberPressed(1);
-            operationDisplay.setText(expression.operation);
-            resultDisplay.setText(expression.result);
-        });
+        one.setOnClickListener(v -> this.updateOperation(1));
 
-        two.setOnClickListener(v -> {
-            expression.numberPressed(2);
-            operationDisplay.setText(expression.operation);
-            resultDisplay.setText(expression.result);
-        });
+        two.setOnClickListener(v -> this.updateOperation(2));
 
-        three.setOnClickListener(v -> {
-            expression.numberPressed(3);
-            operationDisplay.setText(expression.operation);
-            resultDisplay.setText(expression.result);
-        });
+        three.setOnClickListener(v -> this.updateOperation(3));
 
-        four.setOnClickListener(v -> {
-            expression.numberPressed(4);
-            operationDisplay.setText(expression.operation);
-            resultDisplay.setText(expression.result);
-        });
+        four.setOnClickListener(v -> this.updateOperation(4));
 
-        five.setOnClickListener(v -> {
-            expression.numberPressed(5);
-            operationDisplay.setText(expression.operation);
-            resultDisplay.setText(expression.result);
-        });
+        five.setOnClickListener(v -> this.updateOperation(5));
 
         six.setOnClickListener(v -> {
             expression.numberPressed(6);
@@ -241,9 +221,16 @@ public class Calculator extends AppCompatActivity
      * Initializes text viewers.
      */
     public void initDisplay() {
-        operationDisplay = (TextView) findViewById(R.id.operationDisplay);
-        resultDisplay = (TextView) findViewById(R.id.resultDisplay);
+        operationDisplay = findViewById(R.id.operationDisplay);
+        resultDisplay = findViewById(R.id.resultDisplay);
         operationDisplay.setText(expression.operation);
+    }
+
+    /** Updates display on button press*/
+    private void updateOperation(int number){
+        expression.numberPressed(number);
+        operationDisplay.setText(expression.operation);
+        resultDisplay.setText(expression.result);
     }
 
     /**
@@ -252,7 +239,7 @@ public class Calculator extends AppCompatActivity
      */
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -286,7 +273,7 @@ public class Calculator extends AppCompatActivity
                 startActivity(email);
                 return true;
         }
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }

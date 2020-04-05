@@ -8,14 +8,20 @@ import java.util.Stack;
  * The PostFix Class contains static methods that can be used to convert an operation
  * from infix to postfix.
  */
-public class PostFix {
+class ExpressionEvaluator {
+
+    /** Delegate method to evaluate expression*/
+    public static String evaluate(String expression){
+        LinkedList<String> postFixExpression = toPostfix(expression);
+        return postFixEvaluator(postFixExpression);
+    }
 
     /**
      * This method converts an operation from infix to postfix.
      * @param operation The operation to be converted as a string.
      * @return The postfix form of the operation.
      */
-    public static String toPostfix(String operation) {
+    private static LinkedList<String> toPostfix(String operation) {
         Stack<String> symbols = new Stack<>(); //stack for symbols
         LinkedList<String> postFix = new LinkedList<>(); //buffer for postfix operation
         StringBuilder buffer = new StringBuilder(); //buffer for multi digit numbers
@@ -105,11 +111,11 @@ public class PostFix {
                     }
                     break;
                 default:
-                    buffer.append(Character.toString(operation.charAt(i)));
+                    buffer.append(operation.charAt(i));
                     break;
             }
         }
-        return postFixEvaluator(postFix);
+        return postFix;
     }
 
     /**
