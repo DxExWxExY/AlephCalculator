@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".Activities.Calculator"
+            android:name=".views.Calculator"
             android:label="@string/title_activity_calculator"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -20,11 +20,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Activities.About"
+            android:name=".views.About"
             android:label="@string/title_activity_about"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".Activities.History"
+            android:name=".views.History"
             android:label="@string/title_activity_history"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>

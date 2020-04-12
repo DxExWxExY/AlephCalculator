@@ -1,4 +1,4 @@
-package dexeinc.alephcalculator.Support;
+package dexeinc.alephcalculator.data;
 
 import android.content.ContentValues;
 import android.content.Context;

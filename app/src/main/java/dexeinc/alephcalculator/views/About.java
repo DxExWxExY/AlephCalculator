@@ -1,4 +1,4 @@
-package dexeinc.alephcalculator.Activities;
+package dexeinc.alephcalculator.views;
 
 import android.content.Intent;
 import android.net.Uri;

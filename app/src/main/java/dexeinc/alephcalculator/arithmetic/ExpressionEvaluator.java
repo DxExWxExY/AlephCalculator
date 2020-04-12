@@ -1,4 +1,4 @@
-package dexeinc.alephcalculator.Support;
+package dexeinc.alephcalculator.arithmetic;
 
 import java.math.BigDecimal;
 import java.util.LinkedList;
@@ -11,7 +11,7 @@ import java.util.Stack;
 class ExpressionEvaluator {
 
     /** Delegate method to evaluate expression*/
-    public static String evaluate(String expression){
+    static String evaluate(String expression){
         LinkedList<String> postFixExpression = toPostfix(expression);
         return postFixEvaluator(postFixExpression);
     }
@@ -126,16 +126,16 @@ class ExpressionEvaluator {
     private static String postFixEvaluator(LinkedList<String> postFix) {
         Stack<BigDecimal> evaluator = new Stack<>();
         String result;
-        for (String aPostFix : postFix) {
+        for (String entry : postFix) {
             /*If the element at i is a number*/
-            if (!aPostFix.matches("[+-/*]") && !aPostFix.equals("")) {
-                evaluator.push(BigDecimal.valueOf(Double.parseDouble(aPostFix)));
+            if (!entry.matches("[+-/*]") && !entry.equals("")) {
+                evaluator.push(BigDecimal.valueOf(Double.parseDouble(entry)));
             }
             /*If the element at i is an operand*/
-            else if (aPostFix.matches("[+-/*]")) {
+            else if (entry.matches("[+-/*]")) {
                 BigDecimal b = evaluator.pop();
                 BigDecimal a = evaluator.pop();
-                switch (aPostFix) {
+                switch (entry) {
                     case "*":
                         evaluator.push(a.multiply(b));
                         break;

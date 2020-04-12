@@ -1,4 +1,4 @@
-package dexeinc.alephcalculator.Activities;
+package dexeinc.alephcalculator.views;
 
 import android.content.Context;
 import android.content.Intent;
@@ -24,12 +24,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.LinkedList;
 
-import dexeinc.alephcalculator.Support.HistoryDatabase;
-import dexeinc.alephcalculator.Support.OperationBuilder;
+import dexeinc.alephcalculator.arithmetic.OperationBuilder;
 import dexeinc.alephcalculator.R;
 
 public class History extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {

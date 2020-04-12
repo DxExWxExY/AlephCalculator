@@ -1,4 +1,4 @@
-package dexeinc.alephcalculator.Activities;
+package dexeinc.alephcalculator.views;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -16,8 +16,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import dexeinc.alephcalculator.Support.HistoryDatabase;
-import dexeinc.alephcalculator.Support.OperationBuilder;
+import dexeinc.alephcalculator.data.HistoryDatabase;
+import dexeinc.alephcalculator.arithmetic.OperationBuilder;
 import dexeinc.alephcalculator.R;
 
 public class Calculator extends AppCompatActivity
@@ -162,7 +162,7 @@ public class Calculator extends AppCompatActivity
         });
 
         clear.setOnClickListener(v -> {
-            expression.deleteOperation();
+            expression.clearOperation();
             operationDisplay.setText(expression.operation);
             resultDisplay.setText(expression.result);
         });

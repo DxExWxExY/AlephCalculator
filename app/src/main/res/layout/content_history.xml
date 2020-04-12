@@ -6,7 +6,7 @@
     android:layout_height="fill_parent"
     android:background="@color/colorBackground"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".Activities.History"
+    tools:context=".views.History"
     tools:showIn="@layout/app_bar_history">
 
     <TextView
